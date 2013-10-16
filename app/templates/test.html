@@ -1,4 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
 Test!!
+   <script type="text/javascript" >
+ 
+     var svg = d3.select("body")
+      .append("svg")
+      .attr("width", 100)   // <-- Here
+      .attr("height", 200);
+    
+      // plain syntax for creating an svg
+      // without data binding.
+      var mySquare=svg.append("rect")
+	  .attr("x",60)
+	  .attr("y",60)
+	  .attr("fill","blue")
+	  .attr("stroke", "green")
+	  .attr("width",60)
+	  .attr("height",60);
+</script>
 {% endblock %}
