@@ -2,7 +2,7 @@
 from app import app
 import json
 import random
-
+from flask import render_template
 @app.route('/')
 @app.route('/index')
 def index():
@@ -11,7 +11,7 @@ def index():
 @app.route("/some_json")
 def some_json():
 	
-	colors = ["blue","white","green","yellow","red", "brown", "black","purple"];
+	colors = ["blue","white","green","yellow","red", "brown", "black","purple", "grey","orange","#DE2669"];
 	arr = []
 	for i in range(0, 10):
 		n = random.randint(0, len(colors)-1)
@@ -23,6 +23,9 @@ def some_json():
 	return json.dumps(arr)
 		
 		
+@app.route("/testtempl")
+def testtempl():
+	return render_template("test.html")		
 
 
 

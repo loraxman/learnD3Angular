@@ -38,6 +38,11 @@
 	    </li>
 	  </ul>
     </div>
+    <div>
+    <form ng-controller="SomeController">
+		<input type="text" ng-model-onblur ng-change="computeNeeded()" ng-model="youCheckedIt">
+	</form>
+	</div>
     <script type="text/javascript" >
     
     
@@ -58,7 +63,13 @@
 		  });
 		}
 		
-		
+	  function SomeController($scope) {
+		$scope.youCheckedIt = "yes";
+		$scope.computeNeeded = function() {
+			$scope.youCheckedIt = "FFF";
+			alert("xx");
+		};
+	  }
 		
       //Width and height
       var w = 500;
