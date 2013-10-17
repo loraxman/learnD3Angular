@@ -16,8 +16,8 @@ def some_json():
 	for i in range(0, 10):
 		n = random.randint(0, len(colors)-1)
 		r = random.randint(0, 50)
-	
 		d = {"color":colors[n], "r" : r}
+	
 		arr.append(d)
 
 	return json.dumps(arr)
@@ -25,7 +25,10 @@ def some_json():
 		
 @app.route("/testtempl")
 def testtempl():
-	return render_template("test.html")		
+	import urllib2
+	response = urllib2.urlopen('http://hub.healthdata.gov/api/2/rest/dataset')
+	html = response.read()
+	return render_template("test.html", resp=html)		
 
 
 

@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
 Test!!
+<div id="svgdiv">{{ resp }}</div>
    <script type="text/javascript" >
  
-     var svg = d3.select("body")
+ 	for(i=1;i<10;i++) {
+     var svg = d3.select("#svgdiv")
       .append("svg")
       .attr("width", 100)   // <-- Here
       .attr("height", 200);
@@ -23,5 +25,6 @@ Test!!
 	  .transition()
 	  .attr("x",32)
 	  .attr("y", 120);
+	  }
 </script>
 {% endblock %}
