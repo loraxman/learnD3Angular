@@ -1,7 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
 Test!!
-<div id="svgdiv">{{ resp }}</div>
+<div id="svgdiv">
+<ul>
+{% for lnk in resp %}
+	<li> <a href="http://localhost:5000/getdetails/{{ lnk }}">dataset {{ lnk }}</a></li>
+ {% endfor %}	
+ </ul>
+</div>
    <script type="text/javascript" >
  
  	for(i=1;i<10;i++) {

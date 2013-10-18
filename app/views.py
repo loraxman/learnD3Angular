@@ -3,6 +3,7 @@ from app import app
 import json
 import random
 from flask import render_template
+import urllib2
 @app.route('/')
 @app.route('/index')
 def index():
@@ -23,12 +24,18 @@ def some_json():
 	return json.dumps(arr)
 		
 		
+		
 @app.route("/testtempl")
 def testtempl():
-	import urllib2
-	response = urllib2.urlopen('http://hub.healthdata.gov/api/2/rest/dataset')
-	html = response.read()
-	return render_template("test.html", resp=html)		
 
+	response = urllib2.urlopen('http://hub.healthdata.gov/api/2/rest/dataset')
+	lnks = json.loads(response.read())
+	return render_template("test.html", resp=lnks)		
+
+@app.route("/getdetails/<data>")
+def getdetails(data):
+	print 'http://hub.healthdata.gov/api/2/rest/dataset/'+data
+	resp = urllib2.urlopen('http://hub.healthdata.gov/api/2/rest/dataset/'+data)
+	return resp.read()
 
 
