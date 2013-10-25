@@ -66,10 +66,11 @@
 		  	i  = 10;
 		  	 // do some raphel stuff
  			var paper = Raphael(document.getElementById('my-canvas'),320, 200);
-		  	
+		 
 		  	for (d in data ) {
-		  		var c2 = paper.circle(15+i, i+10, data[d]["r"]);
+		  		var c2 = paper.rect(15+i, i+10, data[d]["r"], 50, 6);
 		  		c2.attr("fill",data[d]["color"]);
+		  		paper.text(15+i+3, i+10, data[d]["r"]);
 		  		i += 12;
 		  	}
 		    // this callback will be called asynchronously
