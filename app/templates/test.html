@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
 Test!!
+<div id="my-canvas"></div>
+
 <div id="svgdiv">
 <ul>
 {% for lnk in resp %}
@@ -9,6 +11,27 @@ Test!!
  </ul>
 </div>
    <script type="text/javascript" >
+ 
+ // do some raphel stuff
+ var paper = Raphael($("#my-canvas"),10, 50, 320, 200);
+
+// Creates circle at x = 50, y = 40, with radius 10
+var circle = paper.circle(50, 40, 10);
+// Sets the fill attribute of the circle to red (#f00)
+circle.attr("fill", "#f00");
+
+circle.hover(function () {
+    circle.attr({"stroke": "#000"});
+  },
+  function () {
+    circle.attr({"stroke": "none"});
+  }
+);
+
+for (i =0; i< 15; i++ ) {
+	c2 = paper.circle(15+i, i+10, 10);
+	c2.attr("fill","blue");
+}
  
  	for(i=1;i<10;i++) {
      var svg = d3.select("#svgdiv")

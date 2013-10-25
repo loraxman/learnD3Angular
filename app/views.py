@@ -36,6 +36,9 @@ def testtempl():
 def getdetails(data):
 	print 'http://hub.healthdata.gov/api/2/rest/dataset/'+data
 	resp = urllib2.urlopen('http://hub.healthdata.gov/api/2/rest/dataset/'+data)
-	return resp.read()
+	t = resp.read()
+	parsed = json.loads(t)
+	print parsed['url']
+	return t
 
 

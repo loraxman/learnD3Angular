@@ -16,6 +16,9 @@
      <script src="javascript/angular.min.js">
         <script src="javascript/controllers.js">
     </script>
+    
+    <script  type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    
     <style type="text/css">
       .box {
         background-color: skyblue;
@@ -43,6 +46,8 @@
 		<input type="text" ng-model-onblur ng-change="computeNeeded()" ng-model="youCheckedIt">
 	</form>
 	</div>
+	  <div id="my-canvas"></div>
+	
     <script type="text/javascript" >
     
     
@@ -58,6 +63,15 @@
 		  success(function(data, status, headers, config) {
 		  	
 		  	$scope.phones = data;
+		  	i  = 10;
+		  	 // do some raphel stuff
+ 			var paper = Raphael(document.getElementById('my-canvas'),320, 200);
+		  	
+		  	for (d in data ) {
+		  		var c2 = paper.circle(15+i, i+10, data[d]["r"]);
+		  		c2.attr("fill",data[d]["color"]);
+		  		i += 12;
+		  	}
 		    // this callback will be called asynchronously
 		    // when the response is available
 		  });
