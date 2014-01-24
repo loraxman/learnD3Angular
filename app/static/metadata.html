@@ -1,0 +1,208 @@
+<html ng-app>
+  <head>
+    <title>d3 experiment</title>
+        <script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.min.js"></script>
+    
+     <script src="javascript/angular.min.js">
+        <script src="javascript/controllers.js">
+    </script>
+    
+    <script  type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    
+    <style type="text/css">
+      .box {
+        background-color: skyblue;
+        width: 24px;
+        height: 18px;
+        padding: 4px;
+        margin: 1px;
+      }
+    </style>
+  </head>
+  <body>
+  <!-- Div under control of the angular controller -->
+  <!--  show phones varibale -->
+
+	  <div id="my-canvas"></div>
+	
+	   <button id="last">last</button>
+    <button id="next">next</button>
+    <script type="text/javascript" >
+    
+    
+    // This is a sample controller for Angular
+    // http is injected by the framework
+    // basically call the server get the same data and put into phones object.
+    // these are typically moved to an angular module 
+    // this is for illustration only
+    function HelloController($scope, $http, $location) {
+		
+		// use $location for something good here...
+		$http({method: 'GET', url: 'http://localhost:5000/metadata_json'}).
+		  success(function(data, status, headers, config) {
+		  	
+		  	$scope.phones = data;
+		  	i  = 10;
+		  	 // do some raphel stuff
+ 			var paper = Raphael(document.getElementById('my-canvas'),320, 200);
+		 
+		  	for (d in data ) {
+		  	//	var c2 = paper.rect(15+i, i+10, data[d]["r"], 50, 6);
+		  		//c2.attr("fill",data[d]["color"]);
+		  	//	paper.text(15+i+3, i+10, data[d]["r"]);
+		  		i += 12;
+		  	}
+		    // this callback will be called asynchronously
+		    // when the response is available
+		  });
+		}
+		
+	  function SomeController($scope) {
+		$scope.youCheckedIt = "yes";
+		$scope.computeNeeded = function() {
+			$scope.youCheckedIt = "FFF";
+			alert("xx");
+		};
+	  }
+		
+      //Width and height
+      var w = 900;
+      var h = 350;
+      var page = 1;
+      var viewdata = "";
+      
+      // grab body
+      // start a new svg here
+      var svg = d3.select("body")
+      .append("svg")
+      .attr("width", w)   // <-- Here
+      .attr("height", h); // <-- and here!
+
+        var onClick = function(d){
+        alert(d.color);
+        }
+        var dataset  = "ss";
+
+        // d3.json will make the ajax call for you gives you a callback.
+        //  https://github.com/mbostock/d3/wiki/Requests
+        d3.json("http://localhost:5000/metadata_json", function (d) {
+        dataset = d;
+		viewdata = dataset.slice((page-1)*10, page*10);
+
+        showCircle();
+        });
+
+		function redraw() {     
+			d3.select("svg")
+	       .remove();
+			svg = d3.select("body")
+			      .append("svg")
+			      .attr("width", w)   // <-- Here
+			      .attr("height", h); // <-- and here!
+			
+			showCircle();				
+				
+			}
+			
+		$('#next').click(function() {
+			if (page*10 > dataset.length) 
+				return;
+		    page++;
+		    viewdata = dataset.slice((page-1)*10,page*10);
+		    console.log(viewdata.length);
+		    redraw();
+		});
+		
+		$('#last').click(function() {
+		    page--;
+		    viewdata = dataset.slice((page-1)*10,page*10);
+		    redraw();
+		});
+       
+
+        // add a circles in this dom element that we created for the SVG above.
+        // data(dataset) attaches the array above to each svg item
+        // clicking you can get them and use Jquery or whatever to do more procesing.
+        // NOTE: ajax call should return json array like above and then do
+        // the select on the svg pieces
+        // .data(result)
+        // the function(d) is the json object
+
+        showCircle();
+
+
+        function showCircle() {
+	        var circles = svg.selectAll("circle")
+	        .data(viewdata)
+	        .enter()
+	        .append("circle").on("click", onClick)
+	        .on("mouseover", function() {
+	        d3.select(this).append("text")
+	        .text(function(d) {return d.metadata;})})
+	        .on("mouseout", function() {
+	
+	        //Remove the tooltip
+	        d3.select("#tooltip").remove();
+
+        });
+
+
+
+        circles.attr("cx", function(d, i) {
+        return (i * 55) + 55;
+        })
+        .attr("cy", 200)
+        .attr("r", function(d) {
+        return 25;
+        })
+        
+        .attr("fill", "orange")
+        ;
+
+
+
+
+
+        var circletip = svg.selectAll("tip")
+        .data(viewdata)
+        .enter()
+        .append("text")
+        .on("mouseover", function(d) {
+
+        d3.select(this).attr("opacity","1");
+        })
+        .on("mouseout", function(d) {
+
+        d3.select(this).attr("opacity","0");
+        });
+
+
+        circletip.attr("id", function(d, i ) {
+        return "tooltip"+ i;
+        })
+        .attr("x", function(d, i) { return (i*55+55) })
+        .attr("y", 200)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "10px")
+        .attr("font-weight", "bold")
+        .attr("fill", "black")
+        .attr("opacity", "0")
+        .text(function(d) { return d.metadata })
+        ;
+
+        }
+
+      </script>
+  </body>
+</html>

@@ -22,6 +22,19 @@ def some_json():
 		arr.append(d)
 
 	return json.dumps(arr)
+@app.route("/metadata_json")		
+def metadata_json():
+	
+	items = open("C:/proj/cats/tabs/res.csv").read()
+	items = items.split("\n")
+	arr = []
+	for i in items[0:15]:
+		row = i.split(",")
+		d = {"metadata":row[2]}
+	
+		arr.append(d)
+
+	return json.dumps(arr)
 		
 		
 		
