@@ -89,7 +89,7 @@
       .attr("height", h); // <-- and here!
 
         var onClick = function(d){
-        alert(d.color);
+        alert(d.metadata);
         }
         var dataset  = "ss";
 
@@ -139,13 +139,37 @@
         // the function(d) is the json object
 
         showCircle();
+        
+        
+		var gradient = svg.append("svg:defs")
+		  .append("svg:linearGradient")
+		    .attr("id", "gradient")
+		    .attr("x1", "0%")
+		    .attr("y1", "0%")
+		    .attr("x2", "100%")
+		    .attr("y2", "100%")
+		    .attr("spreadMethod", "pad");
+		
+		gradient.append("svg:stop")
+		    .attr("offset", "0%")
+		    .attr("stop-color", "#0ACCC1")
+		    .attr("stop-opacity", 1);
+		
+		gradient.append("svg:stop")
+		    .attr("offset", "100%")
+		    .attr("stop-color", "#c00")
+		    .attr("stop-opacity", 1);
+
+
+
 
 
         function showCircle() {
 	        var circles = svg.selectAll("circle")
 	        .data(viewdata)
 	        .enter()
-	        .append("circle").on("click", onClick)
+	        .append("circle").on("click", function() {
+	        	d3.select(this).attr("cy", "250");})
 	        .on("mouseover", function() {
 	        d3.select(this).append("text")
 	        .text(function(d) {return d.metadata;})})
@@ -166,11 +190,10 @@
         return 25;
         })
         
-        .attr("fill", "orange")
+ //       .attr("fill",  "url(#gradient)")
+       .attr("fill",  "#0ACCC1")
+     
         ;
-
-
-
 
 
         var circletip = svg.selectAll("tip")
