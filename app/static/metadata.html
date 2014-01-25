@@ -89,20 +89,21 @@
       .attr("width", w)   // <-- Here
       .attr("height", h); // <-- and here!
 
-        var onClick = function(d){
-        alert(d.metadata);
-        }
+     
         var dataset  = "ss";
 
         // d3.json will make the ajax call for you gives you a callback.
         //  https://github.com/mbostock/d3/wiki/Requests
         d3.json("http://localhost:5000/metadata_json", function (d) {
         dataset = d;
+        
 		viewdata = dataset.slice((page-1)*10, page*10);
 
         showCircle();
         });
 
+		//redraw is for next / last
+		// just scrap what is there and redraw
 		function redraw() {     
 			d3.select("svg")
 	       .remove();
@@ -119,6 +120,7 @@
 			if (page*10 > dataset.length) 
 				return;
 		    page++;
+		    //pagination on the data set
 		    viewdata = dataset.slice((page-1)*10,page*10);
 		    console.log(viewdata.length);
 		    redraw();
@@ -142,6 +144,7 @@
         showCircle();
         
         
+        //sets upa gradient..not used
 		var gradient = svg.append("svg:defs")
 		  .append("svg:linearGradient")
 		    .attr("id", "gradient")
@@ -166,73 +169,67 @@
 
 
         function showCircle() {
-	        var circles = svg.selectAll("circle")
-	        .data(viewdata)
-	        .enter()
-	        .append("circle").on("click", function() {
-	        	ybar = 250;
-	        	d3.select(this).transition().duration(300).attr("cy", "250").transition().duration(300).style("fill","#00ffff");
-	        	
-	        })
+        
+        	// setup the group called "circles"
+        	// give it the data and make a new group per item
+        	// onclick move it down 80 over 500 ms
+        	var circles = svg.selectAll("g")
+        	.data(viewdata)
+        	.enter()
+        	.append("g")
+        	.on("click", function () {
+	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
+	        });
+	      
+	        
+	        // add a circle to each group item
+	        // you can add mouseover and out events
+	           circles.append("circle")
 	        .on("mouseover", function() {
 	        	d3.select(this).append("text")
 		        .text(function(d) {return d.metadata;})})
 		        .on("mouseout", function() {
 		
-		        //Remove the tooltip
-		       	 d3.select("#tooltip").remove()
 		        ;
 	
-	        });
-
-			var titles = svg.selectAll("text")
-			.data(viewdata)
-			.enter()
-			.append("text").text(function(d) {return d.metadata;}).attr("x", function(d,i) {
+	        })
+	        ;
+	        
+	        
+	        // append the text to each group
+	        circles.append("text")
+	        .text(function(d) {return d.metadata;})
+	        .attr("x", function(d,i) {
 					return (i*60) + 40;
-					}).attr("y",ybar).attr("font-size","6px");
-
-        circles.attr("cx", function(d, i) {
-        return (i * 60) + 55;
-        })
-        .attr("cy", ybar)
-        .attr("r", function(d) {
-        return 25;
-        })
+					})
+		    .attr("y",ybar).attr("font-size","6px");
+	        
+	        
+	        
+					
+			// set the x,y of circles
+			// had to do own index here
+			var idx  = -1;
+			realcir = circles.selectAll("circle")
+	        .attr("cx", function(d, i) {
+	        	idx ++;
+	        	
+	        return (idx * 60) + 55;
+	        })
+	        .attr("cy", ybar)
+	        .attr("r", function(d) {
+	        	return 25;
+	        })
         
  //       .attr("fill",  "url(#gradient)")
-       .attr("fill",  "#0ACCC1")
+       		.attr("fill",  "#0ACCC1")
      
         ;
 
 
-        var circletip = svg.selectAll("tip")
-        .data(viewdata)
-        .enter()
-        .append("text")
-        .on("mouseover", function(d) {
+  
 
-        d3.select(this).attr("opacity","1");
-        })
-        .on("mouseout", function(d) {
-
-        d3.select(this).attr("opacity","0");
-        });
-
-
-        circletip.attr("id", function(d, i ) {
-        return "tooltip"+ i;
-        })
-        .attr("x", function(d, i) { return (i*55+55) })
-        .attr("y", ybar)
-        .attr("text-anchor", "middle")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "10px")
-        .attr("font-weight", "bold")
-        .attr("fill", "black")
-        .attr("opacity", "0")
-        .text(function(d) { return d.metadata })
-        ;
+     
 
         }
 
