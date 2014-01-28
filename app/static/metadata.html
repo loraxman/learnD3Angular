@@ -78,7 +78,7 @@
       //Width and height
       var w = 900;
       var h = 350;
-      var ybar = 200;
+      var ybar = 80;
       var page = 1;
       var viewdata = "";
       
@@ -173,11 +173,19 @@
         	// setup the group called "circles"
         	// give it the data and make a new group per item
         	// onclick move it down 80 over 500 ms
+        	// click here also does a all but me type query 
+        	// to set opacity lower on all the 'others' when clicked
         	var circles = svg.selectAll("g")
         	.data(viewdata)
         	.enter()
         	.append("g")
         	.on("click", function () {
+        		 var circleUnderMouse = this;
+        		 d3.selectAll('g').transition().style('opacity',function () {
+        		 	if (this == circleUnderMouse) 
+        		 		alert("me");
+        			return (this === circleUnderMouse) ? 1.0 : 0.25;
+        		 });
 	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
 	        });
 	      
@@ -200,9 +208,11 @@
 	        circles.append("text")
 	        .text(function(d) {return d.metadata;})
 	        .attr("x", function(d,i) {
+	        		textWidth = this.getBBox().width;
 					return (i*60) + 40;
 					})
 		    .attr("y",ybar).attr("font-size","6px");
+		  
 	        
 	        
 	        
