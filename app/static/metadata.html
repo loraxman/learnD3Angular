@@ -182,8 +182,6 @@
         	.on("click", function () {
         		 var circleUnderMouse = this;
         		 d3.selectAll('g').transition().style('opacity',function () {
-        		 	if (this == circleUnderMouse) 
-        		 		alert("me");
         			return (this === circleUnderMouse) ? 1.0 : 0.25;
         		 });
 	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
