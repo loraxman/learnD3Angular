@@ -81,6 +81,7 @@
       var ybar = 80;
       var page = 1;
       var viewdata = "";
+      var lastclicked = null;
       
       // grab body
       // start a new svg here
@@ -181,10 +182,23 @@
         	.append("g")
         	.on("click", function () {
         		 var circleUnderMouse = this;
+        		 
         		 d3.selectAll('g').transition().style('opacity',function () {
         			return (this === circleUnderMouse) ? 1.0 : 0.25;
         		 });
 	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
+	        	d3.select(this).style('opacity',function () {
+	        		return 1.0;
+	        	});
+	        	if (lastclicked != null) {
+	        		d3.select(lastclicked).transition().duration(500).attr("transform", "translate(0,0)")
+	        		.style('opacity', function() {
+	        			return 0.25;
+	        		});
+	        	}
+	        	lastclicked = this;
+	        	
+	        	
 	        });
 	      
 	        
