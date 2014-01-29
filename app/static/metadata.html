@@ -184,6 +184,11 @@
         	.on("click", function () {
         		 var circleUnderMouse = this;
         		 
+        		 
+        		 // below gets the data bound to this svg object
+        		d3.select(this).each(function(d){console.log(d.models)});
+        		
+        		
         		 d3.selectAll('g').transition().style('opacity',function () {
         			return (this === circleUnderMouse) ? 1.0 : 0.5;
         		 });
