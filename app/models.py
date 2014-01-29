@@ -24,6 +24,18 @@ class Cat(Document):
     
    
    
+def getall():
+    couch = couchdb.Server("http://localhost:5984") # Assuming localhost:5984
+    # If your CouchDB server is running elsewhere, set it up like this:
+    cats = {}
+    db = couch['metamodel']
+
+    docs  = []
+    for docid in db:
+        m = db.get(docid)
+        docs.append( m)
+        
+    return docs
 def loaddb():
     couch = couchdb.Server("http://localhost:5984") # Assuming localhost:5984
     # If your CouchDB server is running elsewhere, set it up like this:

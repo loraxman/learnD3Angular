@@ -97,7 +97,6 @@
         //  https://github.com/mbostock/d3/wiki/Requests
         d3.json("http://localhost:5000/metadata_json", function (d) {
         dataset = d;
-        
 		viewdata = dataset.slice((page-1)*10, page*10);
 
         showCircle();
@@ -166,7 +165,9 @@
 		    .attr("stop-opacity", 1);
 
 
-
+		function showSubComponents(d) {
+			
+		}
 
 
         function showCircle() {
@@ -184,16 +185,17 @@
         		 var circleUnderMouse = this;
         		 
         		 d3.selectAll('g').transition().style('opacity',function () {
-        			return (this === circleUnderMouse) ? 1.0 : 0.25;
+        			return (this === circleUnderMouse) ? 1.0 : 0.5;
         		 });
 	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
+	        	showSubComponents(d3.select(this));
 	        	d3.select(this).style('opacity',function () {
 	        		return 1.0;
 	        	});
 	        	if (lastclicked != null) {
 	        		d3.select(lastclicked).transition().duration(500).attr("transform", "translate(0,0)")
 	        		.style('opacity', function() {
-	        			return 0.25;
+	        			return 0.5;
 	        		});
 	        	}
 	        	lastclicked = this;
@@ -207,7 +209,7 @@
 	           circles.append("circle")
 	        .on("mouseover", function() {
 	        	d3.select(this).append("text")
-		        .text(function(d) {return d.metadata;})})
+		        .text(function(d) {return d.catname;})})
 		        .on("mouseout", function() {
 		
 		        ;
@@ -218,12 +220,12 @@
 	        
 	        // append the text to each group
 	        circles.append("text")
-	        .text(function(d) {return d.metadata;})
+	        .text(function(d) {return d.catname;})
 	        .attr("x", function(d,i) {
 	        		textWidth = this.getBBox().width;
 					return (i*60) + 40;
 					})
-		    .attr("y",ybar).attr("font-size","6px");
+		    .attr("y",ybar).attr("font-size","7px").attr('font-weight', 'bold');
 		  
 	        
 	        

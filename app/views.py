@@ -4,6 +4,7 @@ import json
 import random
 from flask import render_template
 import urllib2
+import models
 @app.route('/')
 @app.route('/index')
 def index():
@@ -22,14 +23,33 @@ def some_json():
 		arr.append(d)
 
 	return json.dumps(arr)
+
+
+
 @app.route("/metadata_json")		
 def metadata_json():
+	items = models.getall()
+	print len(items)
+	arr = []
+	for i in items:
+		
+		d = i
 	
+		arr.append(d)
+
+	return json.dumps(arr)
+
+
+@app.route("/metadata_json3")		
+def metadata_json3():
 	items = open("C:/proj/cats/tabs/res.csv").read()
 	items = items.split("\n")
+	
+	
 	arr = []
 	for i in items[0:15]:
 		row = i.split(",")
+		
 		d = {"metadata":row[2]}
 	
 		arr.append(d)
