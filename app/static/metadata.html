@@ -122,7 +122,7 @@
 		    page++;
 		    //pagination on the data set
 		    viewdata = dataset.slice((page-1)*10,page*10);
-		    console.log(viewdata.length);
+		//    console.log(viewdata.length);
 		    redraw();
 		});
 		
@@ -184,15 +184,37 @@
         	.on("click", function () {
         		 var circleUnderMouse = this;
         		 
-        		 
         		 // below gets the data bound to this svg object
-        		d3.select(this).each(function(d){console.log(d.models)});
+ 	      // 		console.log("first-->"  + d3.select(circleUnderMouse).data());
+        		var idx = 0;
+        		var items = d3.select(this).data();
+            	for (var x=0; x<items[0].models.length; x++) {
+        			console.log(items[0].models[x])
+        		}
+        		//	
+        		//	console.log(d3.select(this).data());
+        			console.log(d3.select(this));
+        			
+        			//d3.select(this) 
+        			d3.select(this).append("g").selectAll("path")
+        			.data(items[0].models)
+        			.enter()
+        			.append("text")
+					.text( function(dx) {
+						return dx['name'];
+					 })
+        			.attr("x", 60)
+        			.attr("y", function(d,i ) { return i*10+150;}) 
+        		;
         		
         		
+        		//}
+        			
         		 d3.selectAll('g').transition().style('opacity',function () {
         			return (this === circleUnderMouse) ? 1.0 : 0.5;
         		 });
 	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
+	        	
 	        	showSubComponents(d3.select(this));
 	        	d3.select(this).style('opacity',function () {
 	        		return 1.0;
@@ -201,7 +223,8 @@
 	        		d3.select(lastclicked).transition().duration(500).attr("transform", "translate(0,0)")
 	        		.style('opacity', function() {
 	        			return 0.5;
-	        		});
+	        		})
+	        		.selectAll("g").remove();
 	        	}
 	        	lastclicked = this;
 	        	
