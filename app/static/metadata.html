@@ -175,7 +175,10 @@
 
         function showCircle() {
         
-        			var backgrnd = svg.append("rect")
+        	// add a background rectangle for the drawing
+        	// since it is first elements will draw over it
+        	// could make it opaque if wanted to
+        	var backgrnd = svg.append("rect")
 		    .attr("width", w)
 		    .attr("height", h)
 		    .attr("fill", "#E1EDF0")
@@ -193,15 +196,29 @@
         	.data(viewdata)
         	.enter()
         	.append("g")
+        	
+        	// on click we want to move down
+        	// and then draw the models boxes
+        	// and show the column names for each model
         	.on("click", function () {
         		 var circleUnderMouse = this;
         		 
-        		var items = d3.select(this).data();
+        		var items = d3.select(this).data();   //grab bound data to this circle
+        		
+        			// keep this variable 
+        			// it is the groups we built to hold models for each column
+        			// use it first to draw the boxes
+        			// then use it to add text to that group
+        			// NOTE: GEneral pattern for adding up elements to a single group
+        			
         			var mdgroups = d3.select(this).append("g").selectAll("path")
         			.data(items[0].models)
         			.enter()
         			.append("g");
         			
+        			
+        			// draw the rectangles for each model
+        			// mdgroups holds the groups created for each model
         			mdgroups.attr("id", function (d) { return d['name'].replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_"); })
     				.append("rect")
     				.attr("y", function(d,i) { return 120;})
@@ -211,8 +228,9 @@
     				.attr("x", function(d, i) {return i*60;});
         			
            			
-        			
-       			mdgroups.append("text")
+        			// now draw the model name on the boxes for each model
+        			// using the groups list
+       				mdgroups.append("text")
 					.text( function(dx) {
 						return dx['name'];
 					 })
@@ -223,9 +241,11 @@
         			.attr("y", function(d,i ) { return 120;});
         			
         		
+        			// this iterates ver ech model
+        			// using the colnames array to draw the colnames
         			for (var x=0; x<items[0].models.length; x++) {
         			 var gname = "#" + items[0].models[x].name.replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_");
-        			console.log(gname);
+        				console.log(gname);
         				d3.select(gname)
         				.append("g").selectAll("path")
         				.data(items[0].models[x].columns)
@@ -247,33 +267,25 @@
         				.attr("x", 250);
         			}
         			
-        			/***
-        			.append("g").selectAll("path")
-        			.data( function(d) { return d.columns ;}) 
-        			.enter()
-        			.append("text")
-        			.text(function(d) {
-        				return d;
-        			})
-        			.attr("x", 180)
-        			.attr("y", function(d,i ) { return i*10+150;})
-        			;
-        			***/
-        				
-        		
-        		
-        		
-        		//}
         			
+        
+        		// if we clicked our circle brighten
         		 d3.selectAll('g').transition().style('opacity',function () {
         			return (this === circleUnderMouse) ? 1.0 : 0.5;
         		 });
+        		 // move the group circle down on click
 	        	d3.select(this).transition().duration(500).attr("transform", "translate(0,80)");
 	        	
+	        	//stub for all of the above drawing 
 	        	showSubComponents(d3.select(this));
 	        	d3.select(this).style('opacity',function () {
 	        		return 1.0;
 	        	});
+	        	
+	        	//  if the last clicked is not empty
+	        	// this is the previously clicked item
+	        	// lets move it back up to the top and dim
+	        	// removing the children drawings
 	        	if (lastclicked != null) {
 	        		d3.select(lastclicked).transition().duration(500).attr("transform", "translate(0,0)")
 	        		.style('opacity', function() {
