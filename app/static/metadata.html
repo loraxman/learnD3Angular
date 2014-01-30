@@ -225,7 +225,7 @@
     				.attr("height", 30)
     				.attr("width", 50)
     				.attr("fill", "#2d578b")
-    				.attr("x", function(d, i) {return i*60;});
+    				.attr("x", function(d, i) {return i*80;});
         			
            			
         			// now draw the model name on the boxes for each model
@@ -235,7 +235,7 @@
 						return dx['name'].substring(0,15);
 					 })
         			.attr("x", function(d,i) { 
-        				return i*60;
+        				return i*80;
         			})
         			.attr("font-size","7px").attr('font-weight', 'bold')
         			.attr("fill","white")
@@ -256,7 +256,7 @@
         						return d;
         				})
         				
-        				.attr("x", x*40)
+        				.attr("x", x*80)
         				.attr("font-size","4px").attr('font-weight', 'bold')
         				
         				.attr("y", function(d,i) { return i*10+160});
