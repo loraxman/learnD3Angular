@@ -76,7 +76,7 @@
 	  }
 		
       //Width and height
-      var w = 900;
+      var w = 1200;
       var h = 350;
       var ybar = 80;
       var page = 1;
@@ -85,7 +85,7 @@
       
       // grab body
       // start a new svg here
-      var svg = d3.select("body")
+      var svg = d3.select("#my-canvas")
       .append("svg")
       .attr("width", w)   // <-- Here
       .attr("height", h); // <-- and here!
@@ -109,9 +109,12 @@
 	       .remove();
 			svg = d3.select("body")
 			      .append("svg")
+			      .attr("style","background-color:yellow")
 			      .attr("width", w)   // <-- Here
 			      .attr("height", h); // <-- and here!
-			
+			      
+			      
+		    
 			showCircle();				
 				
 			}
@@ -172,6 +175,15 @@
 
         function showCircle() {
         
+        			var backgrnd = svg.append("rect")
+		    .attr("width", w)
+		    .attr("height", h)
+		    .attr("fill", "#E1EDF0")
+		    .attr("x",0)
+		    .attr("y",0);
+		    
+        
+        
         	// setup the group called "circles"
         	// give it the data and make a new group per item
         	// onclick move it down 80 over 500 ms
@@ -184,31 +196,33 @@
         	.on("click", function () {
         		 var circleUnderMouse = this;
         		 
-        		 // below gets the data bound to this svg object
- 	      // 		console.log("first-->"  + d3.select(circleUnderMouse).data());
-        		var idx = 0;
         		var items = d3.select(this).data();
-            	for (var x=0; x<items[0].models.length; x++) {
-        			console.log(items[0].models[x])
-        		}
-        		//	
-        		//	console.log(d3.select(this).data());
-        			console.log(d3.select(this));
-        			
-        			d3.select(this).append("g").attr("id","models"); 
-        			d3.select(this).append("g").selectAll("path")
+        			var mdgroups = d3.select(this).append("g").selectAll("path")
         			.data(items[0].models)
         			.enter()
-        			.append("g")
-        			.attr("id", function (d) { return d['name'].replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_"); })
-        			.append("text")
+        			.append("g");
+        			
+        			mdgroups.attr("id", function (d) { return d['name'].replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_"); })
+    				.append("rect")
+    				.attr("y", function(d,i) { return 120;})
+    				.attr("height", 30)
+    				.attr("width", 50)
+    				.attr("fill", "#2d578b")
+    				.attr("x", function(d, i) {return i*60;});
+        			
+           			
+        			
+       			mdgroups.append("text")
 					.text( function(dx) {
 						return dx['name'];
 					 })
-        			.attr("x", 60)
-        			.attr("y", function(d,i ) { return i*10+150;});
+        			.attr("x", function(d,i) { 
+        				return i*40;
+        			})
+        			.attr("font-size","7px").attr('font-weight', 'bold')
+        			.attr("y", function(d,i ) { return 120;});
         			
-        			
+        		
         			for (var x=0; x<items[0].models.length; x++) {
         			 var gname = "#" + items[0].models[x].name.replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_");
         			console.log(gname);
@@ -220,8 +234,17 @@
         				.text(function(d) {
         						return d;
         				})
+        				
         				.attr("x", 250)
         				.attr("y", function(d,i) { return i*10+150});
+        				
+        				d3.select(gname)
+        				.append("rect")
+        				.attr("y", function(d,i) { return i*10+240;})
+        				.attr("height", 20)
+        				.attr("width", 30)
+        				.attr("fill", "#2d578b")
+        				.attr("x", 250);
         			}
         			
         			/***
