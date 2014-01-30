@@ -195,17 +195,49 @@
         		//	console.log(d3.select(this).data());
         			console.log(d3.select(this));
         			
-        			//d3.select(this) 
+        			d3.select(this).append("g").attr("id","models"); 
         			d3.select(this).append("g").selectAll("path")
         			.data(items[0].models)
         			.enter()
+        			.append("g")
+        			.attr("id", function (d) { return d['name'].replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_"); })
         			.append("text")
 					.text( function(dx) {
 						return dx['name'];
 					 })
         			.attr("x", 60)
-        			.attr("y", function(d,i ) { return i*10+150;}) 
-        		;
+        			.attr("y", function(d,i ) { return i*10+150;});
+        			
+        			
+        			for (var x=0; x<items[0].models.length; x++) {
+        			 var gname = "#" + items[0].models[x].name.replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_");
+        			console.log(gname);
+        				d3.select(gname)
+        				.append("g").selectAll("path")
+        				.data(items[0].models[x].columns)
+        				.enter()
+        				.append("text")
+        				.text(function(d) {
+        						return d;
+        				})
+        				.attr("x", 250)
+        				.attr("y", function(d,i) { return i*10+150});
+        			}
+        			
+        			/***
+        			.append("g").selectAll("path")
+        			.data( function(d) { return d.columns ;}) 
+        			.enter()
+        			.append("text")
+        			.text(function(d) {
+        				return d;
+        			})
+        			.attr("x", 180)
+        			.attr("y", function(d,i ) { return i*10+150;})
+        			;
+        			***/
+        				
+        		
         		
         		
         		//}
