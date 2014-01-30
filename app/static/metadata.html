@@ -32,7 +32,7 @@
   <body>
   <!-- Div under control of the angular controller -->
   <!--  show phones varibale -->
-
+	<h1>Demo of D3 Model Visualization</h1>
 	  <div id="my-canvas"></div>
 	
 	   <button id="last">last</button>
@@ -77,7 +77,7 @@
 		
       //Width and height
       var w = 1200;
-      var h = 350;
+      var h = 650;
       var ybar = 80;
       var page = 1;
       var viewdata = "";
@@ -196,7 +196,7 @@
         	.data(viewdata)
         	.enter()
         	.append("g")
-        	
+        	.attr("class","cat")
         	// on click we want to move down
         	// and then draw the models boxes
         	// and show the column names for each model
@@ -232,13 +232,14 @@
         			// using the groups list
        				mdgroups.append("text")
 					.text( function(dx) {
-						return dx['name'];
+						return dx['name'].substring(0,15);
 					 })
         			.attr("x", function(d,i) { 
-        				return i*40;
+        				return i*60;
         			})
         			.attr("font-size","7px").attr('font-weight', 'bold')
-        			.attr("y", function(d,i ) { return 120;});
+        			.attr("fill","white")
+        			.attr("y", function(d,i ) { return 140;});
         			
         		
         			// this iterates ver ech model
@@ -255,22 +256,18 @@
         						return d;
         				})
         				
-        				.attr("x", 250)
-        				.attr("y", function(d,i) { return i*10+150});
+        				.attr("x", x*40)
+        				.attr("font-size","4px").attr('font-weight', 'bold')
         				
-        				d3.select(gname)
-        				.append("rect")
-        				.attr("y", function(d,i) { return i*10+240;})
-        				.attr("height", 20)
-        				.attr("width", 30)
-        				.attr("fill", "#2d578b")
-        				.attr("x", 250);
+        				.attr("y", function(d,i) { return i*10+160});
+        				
+        				
         			}
         			
         			
         
         		// if we clicked our circle brighten
-        		 d3.selectAll('g').transition().style('opacity',function () {
+        		 d3.selectAll('g.cat').transition().style('opacity',function () {
         			return (this === circleUnderMouse) ? 1.0 : 0.5;
         		 });
         		 // move the group circle down on click
