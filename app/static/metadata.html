@@ -48,6 +48,7 @@
     function HelloController($scope, $http, $location) {
 		
 		// use $location for something good here...
+//		$http({method: 'GET', url: 'http://localhost:5000/metadata_json'}).
 		$http({method: 'GET', url: 'http://localhost:5000/metadata_json'}).
 		  success(function(data, status, headers, config) {
 		  	
@@ -76,7 +77,7 @@
 	  }
 		
       //Width and height
-      var w = 1200;
+      var w = 1400;
       var h = 650;
       var ybar = 80;
       var page = 1;
@@ -225,7 +226,7 @@
     				.attr("height", 30)
     				.attr("width", 50)
     				.attr("fill", "#2d578b")
-    				.attr("x", function(d, i) {return i*80;});
+    				.attr("x", function(d, i) {return i*90;});
         			
            			
         			// now draw the model name on the boxes for each model
@@ -235,7 +236,7 @@
 						return dx['name'].substring(0,15);
 					 })
         			.attr("x", function(d,i) { 
-        				return i*80;
+        				return i*90;
         			})
         			.attr("font-size","7px").attr('font-weight', 'bold')
         			.attr("fill","white")
@@ -247,20 +248,54 @@
         			for (var x=0; x<items[0].models.length; x++) {
         			 var gname = "#" + items[0].models[x].name.replace(/ /g, "_").replace(/\)/g,"_").replace(/\(/g,"_");
         				console.log(gname);
-        				d3.select(gname)
+        				var colcircles  = d3.select(gname)
         				.append("g").selectAll("path")
         				.data(items[0].models[x].columns)
-        				.enter()
+        				.enter();
+        				
+        				
+        				colcircles
+        				.append("circle")
+        				.attr("cx", x*90)
+        				.attr("cy", function(d,i) { return i*10+160})
+        				.attr("r",4)
+        				.attr("fill","red")
+        				.on("mouseover", function(d,i) {
+        				});
+        				
+        				console.log(colcircles);
+        				
+        				//append text to each circle
+          				colcircles
+        				.append("text").text(function(d,i) {
+        					return d.substring(0,30);})
+        				.attr("x", x*90+4)
+        				.attr("y", function(d,i) { return i*10+160})
+        				.attr("fill","blue")
+        				.attr("font-size","6px").attr('font-weight', 'bold')
+        				;
+        				
+        				
+        				
+       			/***	col = colcircles[x];
+			        				colcircles.on("mouseover", function() {
+				        	d3.select(this).append("text")
+					        .text(function(d) {return d;})})
+					       ;
+				        
+        			**/
+        			
+        			/***	
         				.append("text")
         				.text(function(d) {
         						return d;
         				})
         				
-        				.attr("x", x*80)
+        				.attr("x", x*90)
         				.attr("font-size","4px").attr('font-weight', 'bold')
         				
         				.attr("y", function(d,i) { return i*10+160});
-        				
+        				***/
         				
         			}
         			
