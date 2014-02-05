@@ -18,7 +18,7 @@
     
       <div id="impress" data-transition-duration="2000">
         <div id="start" class="step slide" data-x="0">
-          <p >Validating Carrier MDM POC</p>
+          <p >GSA By Airline</p>
           <div id="chart1" class="chart"></div>
         </div>
 
@@ -143,10 +143,14 @@
  
  <script type="text/javascript">
  	var dataset = "";
+ 	var page = 1;
+    var viewdata = "";
+ 	
  	var max = 0;
  	d3.json("http://localhost:5000/gsa_json", function(d) {
  		dataset = d;
  	    max = d3.max(dataset, function(d,i) { return d.count;});
+ 		viewdata = dataset.slice((page-1)*20, page*20);
  		
 		renderChart();
  	});
@@ -157,14 +161,14 @@
 	  		
 	 	var x = d3.scale.linear()
 		    .domain([0, max])
-		    .range([0, 400]);	
+		    .range([0, 700]);	
 		    
 	 		
 	 	d3.select("#chart1")
 	 		
 	 		
 	 		.selectAll("div")
-	 		.data(dataset)
+	 		.data(viewdata)
 	 		.enter()
 	 		
 	 		.append("div")
