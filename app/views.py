@@ -26,6 +26,12 @@ def some_json():
 
 
 
+@app.route("/gsa_json")	
+def gsa_json():
+	data = [{"airline":"American", "count":100},{"airline":"JetBlue", "count":10}]
+	return json.dumps(data)
+	pass
+
 @app.route("/metadata_json")		
 def metadata_json():
 	items = models.getall()
