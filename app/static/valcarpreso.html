@@ -161,7 +161,7 @@
 	  		
 	 	var x = d3.scale.linear()
 		    .domain([0, max])
-		    .range([0, 700]);	
+		    .range([0, 800]);	
 		    
 	 		
 	 	d3.select("#chart1")
@@ -174,7 +174,15 @@
 	 		.append("div")
 	 		.attr("class","chart")
     			.style("width", function(d) { return x(d.count) + "px"; })
-    			.text(function(d) { return d.airline; });
+    			.text(function(d) { return d.airline; })
+    		.on("mouseover", function() {
+    			textshow = d3.select(this).append("text").text(function(d) { return d.count;});
+    		})
+    		 .on("mouseout", function() {
+    		 	var t = d3.select(this);
+    		 	//alert (d3.select(t.text));
+				textshow.remove();
+	         });
  		
  	}
  </script>
