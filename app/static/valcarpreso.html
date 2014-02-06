@@ -176,7 +176,10 @@
     			.style("width", function(d) { return x(d.count) + "px"; })
     			.text(function(d) { return d.airline; })
     		.on("mouseover", function() {
-    			textshow = d3.select(this).append("text").text(function(d) { return d.count;});
+    			textshow = d3.select(this).append("p").text(function(d) { return d.count;}).style("text-align","left")
+    			.style("float","left").style("color","yellow")
+    			
+    			.attr("color","red");
     		})
     		 .on("mouseout", function() {
     		 	var t = d3.select(this);
