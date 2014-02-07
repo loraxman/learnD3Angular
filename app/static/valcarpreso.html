@@ -91,6 +91,9 @@
                     .domain([100, 500])
                     .range([10, 350]);
 	  	
+	  	// gives us a scale that can map domain vales 
+	  	// to  afixed number of 10 buckets
+	  	// that we will use to get a color 0-10 that represents sizing group
 	  	var colmap = d3.scale.quantize()
 	  		.domain(d3.range(0, 7000))
 	  		.range(d3.range(0,10));
