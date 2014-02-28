@@ -5,6 +5,7 @@ Created on Feb 28, 2014
 '''
 import sqlite3
 import MySQLdb
+import re
 
 global rowcount 
 rowcount  = 0
@@ -16,6 +17,15 @@ def init(location):
     conn = sqlite3.connect(location)
     c = conn.cursor()
 
+
+def is_datetype(col):
+    match = re.findall(r'(\d+-\d+-\d+)',col)
+    print match,col
+    if len(match) > 0:
+        return True
+    else:
+        return False
+    
 def connect_mysql():
     db = MySQLdb.connect(host="10.14.149.47", # your host, usually localhost
                      user="valcar", # your username
@@ -32,17 +42,21 @@ def load_csv(filename, tablename, delim=",", readone=False):
     if readone:
         cfile = open(filename)
         header = cfile.readline().split(",")
+        cfile2 = open(filename)
+        cfile2.readline()
+        first_row = cfile2.readline().strip().split(delim)
     else:
         content = open(filename).read()
         items = content.split("\n")
         header = items[0].split(delim)
-    
+        first_row = items[1].split(delim)
+        
     cols = []
     for col in header:
         col = col[0:60].strip()
  #       print col
         cols.append(col.replace('"','').replace("(", "_").replace(" ", "_").replace(")","_").replace("#","_").replace("/",""))
-    create_table(tablename, cols,c)
+    create_table(tablename, cols,c, first_row)
     
     if readone:
         while True:
@@ -58,7 +72,16 @@ def load_csv(filename, tablename, delim=",", readone=False):
      
  
   
-  
+def get_coltype(colval):
+    if is_datetype(colval):
+        return "datetime"
+    if colval.isdigit() and colval.find(".") != -1:
+        return "decimal(10,3)"
+    if colval.isdigit():
+        return "int"
+    return "varchar(255)"
+
+
 def read_row(record, delim,cols):
         row={}
         colvals = record.split(delim)
@@ -107,13 +130,16 @@ def insert_table(tabname, row, c,conn):
     pass
 
 
-def create_table(tabname, colnames,c):
+def create_table(tabname, colnames,c, first_row):
     sql = 'drop table if exists ' + tabname + ";"
     print sql
     c.execute(sql)
     sql = "create table  " + tabname + " ("
+    idx = 0
     for col in colnames:
-        sql += col + ' varchar(255) ,'
+        coltype = get_coltype(first_row[idx])
+        sql += col + ' ' + coltype + " ," 
+        idx += 1
     sql = sql[0:len(sql)-1] 
     sql = sql + ");"
     print sql
