@@ -1,0 +1,913 @@
+<html lang="en">
+	<head>
+		<title>TripCase PoC</title>
+        <script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+     <script  type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.min.js"></script>
+
+	</head>
+	<body>
+    
+      <div id="impress" data-transition-duration="2000">
+        <div id="start" class="step slide" data-x="0">
+          <p >TripCase Intelligence Proof of Concept</p>
+          
+          <div id="rtest"></div>
+        </div>
+
+        <div id="slide2" data-x="-1000" 
+          class="step slide">
+
+          <p >
+            TripCase 
+          </p>
+            <div id="s2anim"></div>
+          </div>
+
+ 
+      </div>
+
+      
+
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.min.js"></script>
+
+		<script type="text/javascript" src="javascript/impress.js"></script>
+       <script type="text/javascript">impress().init();</script>
+<script type="text/javascript">
+
+  var api = impress();
+  var paper;
+  var paper2;
+  // Catch Impress slide changes.
+              $(document).ready(function() {
+                $(document).on('impress:stepenter', function(e) {
+                    var currentSlide = $(e.target).attr('id');
+ 
+                    if (currentSlide === 'slide2') {
+                        //setTimeout(api.next, 2000);
+                       
+                        animate_slide2();
+                    } else if (currentSlide === 'slide3') {
+                        window.location = 'http://www.google.com/';
+                    }
+                });
+            });
+  
+  
+ paper = Raphael(document.getElementById('rtest'),0, 0, 1000,1000);
+ paper.setSize(1000,1000);
+//var mySVG=["rtest",0,0,612.164,613.171,{"fill":"#000","path":"M 0 0 L 10 5 L 0 10 z","stroke":"none","type":"path"},{"fill":"#000","path":"M 10 0 L 0 5 L 10 10 z","stroke":"none","type":"path"},{" stroke-width":"3.4079999999999999","path":"M 82.4318 17.9239C 41.0968 17.9239 17.8608 39.2949 17.8608 82.9599L 17.8608 533.082C 17.8608 573.925 38.7518 595.31 80.0528 595.31L 532.077 595.31C 573.38 595.31 594.303 574.99 594.303 533.082L 594.303 82.9599C 594.303 40.3599 573.38 17.9239 530.78 17.9239C 530.78 17.9239 82.2888 17.7819 82.4318 17.9239z","fill":"#000"," fill":"#000000","stroke":"#ffffff","type":"path"},{"type":"path"," fill":"#ffffff","path":"M 191.082 202.002L 247.849 202.002L 247.849 161.262C 247.849 146.452 261.114 137.054 276.91 137.054C 276.707 137.054 337.481 137.054 337.481 137.054C 353.277 137.054 366.321 146.452 366.321 161.262L 366.321 202.002L 423.582 202.002L 423.582 485.856L 191.082 485.856L 191.082 202.002z","stroke":"none","fill":"#000"},{"type":"path"," fill":"#ffffff","path":"M 169.767 485.364L 138.582 485.364C 117.082 485.364 96.2158 469.546 96.2158 442.046C 96.2158 442.046 96.2158 245.046 96.2158 244.546C 96.2158 220.046 116.582 201.508 138.582 201.508L 169.767 201.508L 169.767 485.364z","stroke":"none","fill":"#000"},{"type":"path"," fill":"#ffffff","path":"M 444.397 485.364L 475.582 485.364C 497.082 485.364 517.948 469.546 517.948 442.046C 517.948 442.046 517.948 245.046 517.948 244.546C 517.948 220.046 497.582 201.508 475.582 201.508L 444.397 201.508L 444.397 485.364z","stroke":"none","fill":"#000"},{"type":"path"," fill":"#000000","path":"M 344.734 202.002L 344.734 160.006L 268.715 160.006L 268.715 202.002L 344.734 202.002z","stroke":"none","fill":"#000"}];
+//var mySVG=["rtest",0,0,612.164,613.171,{"fill":"#000","stroke":"none","path":"M 0 0 L 10 5 L 0 10 z","type":"path"},{"fill":"#000","stroke":"none","path":"M 10 0 L 0 5 L 10 10 z","type":"path"},{"fill":"#000","stroke":"#ffffff","type":"path"," stroke-width":"3.4079999999999999","path":"M 82.4318 17.9239C 41.0968 17.9239 17.8608 39.2949 17.8608 82.9599L 17.8608 533.082C 17.8608 573.925 38.7518 595.31 80.0528 595.31L 532.077 595.31C 573.38 595.31 594.303 574.99 594.303 533.082L 594.303 82.9599C 594.303 40.3599 573.38 17.9239 530.78 17.9239C 530.78 17.9239 82.2888 17.7819 82.4318 17.9239z"," fill":"#000000"},{"fill":"#000","stroke":"none","type":"path","path":"M 478.698 507.886L 478.698 214.096L 138.466 214.096L 138.466 507.886L 478.698 507.886z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 308.582 360.991"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 437.346 464.669L 437.346 253.471L 178.232 253.471L 178.232 464.669L 437.346 464.669z"," fill":"#000000"},{"fill":"#000","stroke":"none","type":"path","path":"M 307.789 359.07"," fill":"#000000"},{"fill":"#000","stroke":"none","type":"path","path":"M 251.488 301.919L 279.01 301.919L 279.01 282.568C 279.01 275.351 285.443 270.772 293.1 270.772C 293.003 270.772 322.469 270.772 322.469 270.772C 330.126 270.772 336.45 275.351 336.45 282.568L 336.45 301.919L 364.214 301.919L 364.214 439.736L 251.488 439.736L 251.488 301.919z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 241.154 439.496L 226.034 439.496C 215.609 439.496 205.493 431.788 205.493 418.388C 205.493 418.388 205.493 322.894 205.493 322.65C 205.493 310.712 215.367 301.679 226.034 301.679L 241.154 301.679L 241.154 439.496z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 374.306 439.496L 389.426 439.496C 399.849 439.496 409.966 431.788 409.966 418.388C 409.966 418.388 409.966 322.894 409.966 322.65C 409.966 310.712 400.091 301.679 389.426 301.679L 374.306 301.679L 374.306 439.496z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 325.984 301.919L 325.984 281.956L 289.128 281.956L 289.128 301.919L 325.984 301.919z"," fill":"#000000"},{"fill":"#000","stroke":"none","type":"path","path":"M 243.344 194.812C 276.098 194.812 302.647 168.26 302.647 135.507C 302.647 102.756 276.098 76.2059 243.344 76.2059C 210.592 76.2059 184.042 102.756 184.042 135.507C 184.042 168.26 210.592 194.812 243.344 194.812z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 243.344 135.507"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 408.676 160.351L 393.893 145.375L 379.465 159.991L 365.273 145.613L 351.082 159.991L 336.892 145.613L 318.443 164.303L 283.674 164.303L 283.674 106.076L 413.763 106.076L 433.749 126.324C 436.879 129.5 436.704 132.194 433.866 135.07L 409.031 160.231"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 217.424 150.519C 226.221 150.519 233.35 143.387 233.35 134.59C 233.35 125.796 226.221 118.664 217.424 118.664C 208.626 118.664 201.495 125.796 201.495 134.59C 201.495 143.387 208.626 150.519 217.424 150.519z"," fill":"#000000"},{"fill":"#000","stroke":"none","type":"path","path":"M 217.424 134.59"," fill":"#000000"}];
+//var mySVG=[0,0,612.164,613.171,{"fill":"#000","stroke":"none","path":"M 0 0 L 10 5 L 0 10 z","type":"path"},{"fill":"#000","stroke":"none","path":"M 10 0 L 0 5 L 10 10 z","type":"path"},{"fill":"#000","stroke":"#ffffff","type":"path"," stroke-width":"3.4079999999999999","path":"M 82.4318 17.9239C 41.0968 17.9239 17.8608 39.2949 17.8608 82.9599L 17.8608 533.082C 17.8608 573.925 38.7518 595.31 80.0528 595.31L 532.077 595.31C 573.38 595.31 594.303 574.99 594.303 533.082L 594.303 82.9599C 594.303 40.3599 573.38 17.9239 530.78 17.9239C 530.78 17.9239 82.2888 17.7819 82.4318 17.9239z"," fill":"#000000"},{"fill":"#000","stroke":"none","type":"path","path":"M 290.705 144.866C 313.477 144.866 331.938 126.405 331.938 103.631C 331.938 80.8589 313.477 62.3959 290.705 62.3959C 267.931 62.3959 249.468 80.8589 249.468 103.631C 249.468 126.405 267.931 144.866 290.705 144.866z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 443.035 486.34L 460.932 486.34C 473.714 486.34 480.238 476.305 480.238 467.116C 480.238 467.116 480.238 366.116 480.238 365.616C 480.238 356.427 473.047 346.274 460.932 346.274L 443.035 346.274L 443.035 486.34z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 241.499 155.567L 154.639 66.7079C 135.469 47.5379 107.513 75.4919 126.683 94.6619L 237.709 207.69L 237.709 534.361C 237.709 566.622 284.782 565.674 284.782 534.361L 284.782 346.269L 292.673 346.288L 292.673 534.378C 292.673 565.691 340.098 566.622 340.098 534.361L 340.098 220.089L 348.432 220.089L 348.432 327.104L 348.432 327.285L 348.432 346.274L 322.291 346.274L 322.291 486.34L 433.45 486.34L 433.45 346.274L 407.154 346.274L 407.154 327.104C 407.154 319.915 402.841 316.081 395.173 316.081C 395.173 316.081 390.678 316.081 383.01 316.081L 382.98 316.081L 382.98 207.279C 382.98 182.116 361.432 155.565 332.932 155.565L 241.503 155.565L 241.499 155.567z"," fill":"#ffffff"},{"fill":"#000","stroke":"none","type":"path","path":"M 395.411 346.274L 395.411 327.345L 359.511 327.345L 359.511 346.274L 395.411 346.274z"," fill":"#000000"}];
+var mySVG=[{x:0,y:0,x1:440.475,y1:436.597},{"fill":"#000","stroke":"none","path":"M 0 0 L 10 5 L 0 10 z","type":"path"},{"fill":"#000","stroke":"none","path":"M 10 0 L 0 5 L 10 10 z","type":"path"},{"fill":"#000","stroke":"none","type":"path","path":"M 430.366 48.7113C 459.521 19.5583 419.196 -18.5557 390.412 10.2323L 284.111 116.529L 40.595 52.1583L 0 92.7533L 200.708 198.458L 119.533 279.631L 56.426 271.882L 24.32 303.987L 95.915 341.631L 133.558 413.226L 165.663 381.119L 158.283 318.381L 239.458 237.207L 342.893 436.597L 383.488 396.002L 321.861 157.418L 430.366 48.7113z"," fill":"#000000"}];
+var mySVG=[0,0,586.731,440,{"fill":"#000","stroke":"none","path":"M0 0v1h8v-1z","type":"path"},{"fill":"#000","stroke":"none","path":"M419 1018l 0-81 112 0 0 81-112 0z","type":"path"},{"type":"path","path":"M419 1018l 112 0 0-81-112 0 0 81","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M335 467l 0-20 14 0 0 20-14 0z","type":"path"},{"type":"path","path":"M335 467l 14 0 0-20-14 0 0 20","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M423 464l 0-22 7 0 0 22-7 0z","type":"path"},{"type":"path","path":"M423 464l 7 0 0-22-7 0 0 22","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M693 490l 0 121","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#686868","stroke":"none","path":"M683 484l 0-16 3-2 50 0 2 2 0 16 8 5-69 0 5-4 1-1z","type":"path"},{"type":"path","path":"M683 484l 0-16 3-2 50 0 2 2 0 16 8 5-69 0 5-4","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M700 613l 0-204 25 0 0 204-25 0z","type":"path"},{"type":"path","path":"M700 613l 25 0 0-204-25 0 0 204","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#a3a3a3","stroke":"none","path":"M624 843l 73 0 49-33 0-94-8-6 0-101-53 0 0 98-35 26-25 0-1 108 0 2z","type":"path"},{"type":"path","path":"M624 843l 73 0 49-33 0-94-8-6 0-101-53 0 0 98-35 26-25 0-1 108","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#c1c1c1","stroke":"none","path":"M704 1003l 0-124 664 0 0 124-664 0z","type":"path"},{"type":"path","path":"M704 1003l 664 0 0-124-664 0 0 124","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M409 1006l-1-13-2-13-3-14-4-12-6-13-6-11-8-11-8-10-10-9-10-8-11-7-11-6-12-5-12-3-13-2-12-1-12 1-13 2-12 3-12 5-11 6-11 7-10 8-10 9-8 10-8 11-6 11-6 13-4 12-3 14-2 13-1 13 1 13 2 13 3 14 4 12 6 13 6 11 8 11 8 10 10 9 10 8 11 7 11 6 12 5 12 3 13 2 12 1 12-1 13-2 12-3 12-5 11-6 11-7 10-8 10-9 8-10 8-11 6-11 6-13 4-12 3-14 2-13 1-13z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":129,"ry":138,"stroke":"#000","fill":"#000","cx":280,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M345 1006l-1-9-2-10-3-9-5-9-5-8-7-7-7-6-8-4-9-4-9-2-9-1-9 1-9 2-9 4-8 4-7 6-7 7-5 8-5 9-3 9-2 10-1 9 1 9 2 10 3 9 5 9 5 8 7 7 7 6 8 4 9 4 9 2 9 1 9-1 9-2 9-4 8-4 7-6 7-7 5-8 5-9 3-9 2-10 1-9z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":65,"ry":69,"stroke":"#000","fill":"#000","cx":280,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M312 1006l-1-6-2-7-3-5-4-6-5-4-5-3-6-2-6-1-6 1-6 2-5 3-5 4-4 6-3 5-2 7-1 6 1 6 2 7 3 5 4 6 5 4 5 3 6 2 6 1 6-1 6-2 5-3 5-4 4-6 3-5 2-7 1-6z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":32,"ry":34,"stroke":"#000","fill":"#000","cx":280,"stroke-width":18,"cy":1006,"type":"ellipse"},{"rx":76,"ry":81,"stroke":"#fff","fill":"#000","cx":280,"stroke-width":18,"cy":1006,"type":"ellipse"},{"fill":"#e0e0e0","stroke":"none","path":"M1036 803l 0-489 1884 0 0 489-1884 0z","type":"path"},{"type":"path","path":"M1036 803l 1884 0 0-489-1884 0 0 489","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1219 1006l-1-13-2-13-3-14-4-12-6-13-6-11-8-11-8-10-10-9-10-8-11-7-11-6-12-5-12-3-13-2-12-1-12 1-13 2-12 3-12 5-11 6-11 7-10 8-10 9-8 10-8 11-6 11-6 13-4 12-3 14-2 13-1 13 1 13 2 13 3 14 4 12 6 13 6 11 8 11 8 10 10 9 10 8 11 7 11 6 12 5 12 3 13 2 12 1 12-1 13-2 12-3 12-5 11-6 11-7 10-8 10-9 8-10 8-11 6-11 6-13 4-12 3-14 2-13 1-13z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":129,"ry":138,"stroke":"#000","fill":"#000","cx":1090,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M1155 1006l-1-9-2-10-3-9-5-9-5-8-7-7-7-6-8-4-9-4-9-2-9-1-9 1-9 2-9 4-8 4-7 6-7 7-5 8-5 9-3 9-2 10-1 9 1 9 2 10 3 9 5 9 5 8 7 7 7 6 8 4 9 4 9 2 9 1 9-1 9-2 9-4 8-4 7-6 7-7 5-8 5-9 3-9 2-10 1-9z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":65,"ry":69,"stroke":"#000","fill":"#000","cx":1090,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M1122 1006l-1-6-2-7-3-5-4-6-5-4-5-3-6-2-6-1-6 1-6 2-5 3-5 4-4 6-3 5-2 7-1 6 1 6 2 7 3 5 4 6 5 4 5 3 6 2 6 1 6-1 6-2 5-3 5-4 4-6 3-5 2-7 1-6z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":32,"ry":34,"stroke":"#000","fill":"#000","cx":1090,"stroke-width":18,"cy":1006,"type":"ellipse"},{"rx":76,"ry":81,"stroke":"#fff","fill":"#000","cx":1090,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M1543 1006l-1-13-2-13-3-14-4-12-6-13-6-11-8-11-8-10-10-9-10-8-11-7-11-6-12-5-12-3-13-2-12-1-12 1-13 2-12 3-12 5-11 6-11 7-10 8-10 9-8 10-8 11-6 11-6 13-4 12-3 14-2 13-1 13 1 13 2 13 3 14 4 12 6 13 6 11 8 11 8 10 10 9 10 8 11 7 11 6 12 5 12 3 13 2 12 1 12-1 13-2 12-3 12-5 11-6 11-7 10-8 10-9 8-10 8-11 6-11 6-13 4-12 3-14 2-13 1-13z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":129,"ry":138,"stroke":"#000","fill":"#000","cx":1414,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M1479 1006l-1-9-2-10-3-9-5-9-5-8-7-7-7-6-8-4-9-4-9-2-9-1-9 1-9 2-9 4-8 4-7 6-7 7-5 8-5 9-3 9-2 10-1 9 1 9 2 10 3 9 5 9 5 8 7 7 7 6 8 4 9 4 9 2 9 1 9-1 9-2 9-4 8-4 7-6 7-7 5-8 5-9 3-9 2-10 1-9z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":65,"ry":69,"stroke":"#000","fill":"#000","cx":1414,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M1446 1006l-1-6-2-7-3-5-4-6-5-4-5-3-6-2-6-1-6 1-6 2-5 3-5 4-4 6-3 5-2 7-1 6 1 6 2 7 3 5 4 6 5 4 5 3 6 2 6 1 6-1 6-2 5-3 5-4 4-6 3-5 2-7 1-6z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":32,"ry":34,"stroke":"#000","fill":"#000","cx":1414,"stroke-width":18,"cy":1006,"type":"ellipse"},{"rx":76,"ry":81,"stroke":"#fff","fill":"#000","cx":1414,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M2457 1006l-1-13-2-13-3-14-4-12-6-13-6-11-8-11-8-10-10-9-10-8-11-7-11-6-12-5-12-3-13-2-12-1-12 1-13 2-12 3-12 5-11 6-11 7-10 8-10 9-8 10-8 11-6 11-6 13-4 12-3 14-2 13-1 13 1 13 2 13 3 14 4 12 6 13 6 11 8 11 8 10 10 9 10 8 11 7 11 6 12 5 12 3 13 2 12 1 12-1 13-2 12-3 12-5 11-6 11-7 10-8 10-9 8-10 8-11 6-11 6-13 4-12 3-14 2-13 1-13z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":129,"ry":138,"stroke":"#000","fill":"#000","cx":2328,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M2393 1006l-1-9-2-10-3-9-5-9-5-8-7-7-7-6-8-4-9-4-9-2-9-1-9 1-9 2-9 4-8 4-7 6-7 7-5 8-5 9-3 9-2 10-1 9 1 9 2 10 3 9 5 9 5 8 7 7 7 6 8 4 9 4 9 2 9 1 9-1 9-2 9-4 8-4 7-6 7-7 5-8 5-9 3-9 2-10 1-9z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":65,"ry":69,"stroke":"#000","fill":"#000","cx":2328,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M2360 1006l-1-6-2-7-3-5-4-6-5-4-5-3-6-2-6-1-6 1-6 2-5 3-5 4-4 6-3 5-2 7-1 6 1 6 2 7 3 5 4 6 5 4 5 3 6 2 6 1 6-1 6-2 5-3 5-4 4-6 3-5 2-7 1-6z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":32,"ry":34,"stroke":"#000","fill":"#000","cx":2328,"stroke-width":18,"cy":1006,"type":"ellipse"},{"rx":76,"ry":81,"stroke":"#fff","fill":"#000","cx":2328,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M2780 1006l-1-13-2-13-3-14-4-12-6-13-6-11-8-11-8-10-10-9-10-8-11-7-11-6-12-5-12-3-13-2-12-1-12 1-13 2-12 3-12 5-11 6-11 7-10 8-10 9-8 10-8 11-6 11-6 13-4 12-3 14-2 13-1 13 1 13 2 13 3 14 4 12 6 13 6 11 8 11 8 10 10 9 10 8 11 7 11 6 12 5 12 3 13 2 12 1 12-1 13-2 12-3 12-5 11-6 11-7 10-8 10-9 8-10 8-11 6-11 6-13 4-12 3-14 2-13 1-13z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":129,"ry":138,"stroke":"#000","fill":"#000","cx":2651,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M2716 1006l-1-9-2-10-3-9-5-9-5-8-7-7-7-6-8-4-9-4-9-2-9-1-9 1-9 2-9 4-8 4-7 6-7 7-5 8-5 9-3 9-2 10-1 9 1 9 2 10 3 9 5 9 5 8 7 7 7 6 8 4 9 4 9 2 9 1 9-1 9-2 9-4 8-4 7-6 7-7 5-8 5-9 3-9 2-10 1-9z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":65,"ry":69,"stroke":"#000","fill":"#000","cx":2651,"stroke-width":1,"cy":1006,"type":"ellipse"},{"type":"path","path":"M2683 1006l-1-6-2-7-3-5-4-6-5-4-5-3-6-2-6-1-6 1-6 2-5 3-5 4-4 6-3 5-2 7-1 6 1 6 2 7 3 5 4 6 5 4 5 3 6 2 6 1 6-1 6-2 5-3 5-4 4-6 3-5 2-7 1-6z","stroke":"#fff","stroke-width":1,"fill":"#c1c1c1"},{"rx":32,"ry":34,"stroke":"#000","fill":"#000","cx":2651,"stroke-width":18,"cy":1006,"type":"ellipse"},{"rx":76,"ry":81,"stroke":"#fff","fill":"#000","cx":2651,"stroke-width":1,"cy":1006,"type":"ellipse"},{"fill":"#000","stroke":"none","path":"M2086 861l 0-58 808 0 0 58-808 0z","type":"path"},{"type":"path","path":"M2086 861l 808 0 0-58-808 0 0 58","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M2468 1003l 42 0 0-27 20-51 43-46 11-9-193 0 24 14 38 40 15 55 0 22 0 0 0 0 0 2z","type":"path"},{"type":"path","path":"M2468 1003l 42 0 0-27 20-51 43-46 11-9-193 0 24 14 38 40 15 55 0 22 0 0 0 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M2719 872l 122 0 0 49-51 61-7-31-13-30-17-23-15-12-19-14 0 0z","type":"path"},{"type":"path","path":"M2719 872l 122 0 0 49-51 61-7-31-13-30-17-23-15-12-19-14","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#a3a3a3","stroke":"none","path":"M2819 761l 0-17 1-8 7-1 46 0 7 1 2 8 0 17-2 7-7 2-46 0-7-2-1-7z","type":"path"},{"type":"path","path":"M2819 761l 0-17 1-8 7-1 46 0 7 1 2 8 0 17-2 7-7 2-46 0-7-2-1-7","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M2819 761l 0-17 1-8 7-1 46 0 7 1 2 8 0 17-2 7-7 2-46 0-7-2-1-7","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M2819 761l 0-17 1-8 7-1 46 0 7 1 2 8 0 17-2 7-7 2-46 0-7-2-1-7","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M2877 1047l 0-189 11 0 0 189-11 0z","type":"path"},{"type":"path","path":"M2877 1047l 11 0 0-189-11 0 0 189","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M562 982l 0-77 0-10 1-8 3-7 4-5 5-4 7-3 8-1 11 0 236 0 9 0 8 1 6 3 6 4 3 5 3 7 2 8 1 10 0 77-1 9-2 8-3 6-3 6-6 3-6 3-8 2-9 1-236 0-11-1-8-2-7-3-5-3-4-6-3-6-1-8 0-9z","type":"path"},{"type":"path","path":"M562 982l 0-77 0-10 1-8 3-7 4-5 5-4 7-3 8-1 11 0 236 0 9 0 8 1 6 3 6 4 3 5 3 7 2 8 1 10 0 77-1 9-2 8-3 6-3 6-6 3-6 3-8 2-9 1-236 0-11-1-8-2-7-3-5-3-4-6-3-6-1-8 0-9","stroke":"#fff","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M562 982l 0-77 0-10 1-8 3-7 4-5 5-4 7-3 8-1 11 0 236 0 9 0 8 1 6 3 6 4 3 5 3 7 2 8 1 10 0 77-1 9-2 8-3 6-3 6-6 3-6 3-8 2-9 1-236 0-11-1-8-2-7-3-5-3-4-6-3-6-1-8 0-9z","type":"path"},{"type":"path","path":"M562 982l 0-77 0-10 1-8 3-7 4-5 5-4 7-3 8-1 11 0 236 0 9 0 8 1 6 3 6 4 3 5 3 7 2 8 1 10 0 77-1 9-2 8-3 6-3 6-6 3-6 3-8 2-9 1-236 0-11-1-8-2-7-3-5-3-4-6-3-6-1-8 0-9","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M562 982l 0-77 0-10 1-8 3-7 4-5 5-4 7-3 8-1 11 0 236 0 9 0 8 1 6 3 6 4 3 5 3 7 2 8 1 10 0 77-1 9-2 8-3 6-3 6-6 3-6 3-8 2-9 1-236 0-11-1-8-2-7-3-5-3-4-6-3-6-1-8 0-9","stroke":"#000","stroke-width":18,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M748 1003l 0-130 7 0 0 130-7 0z","type":"path"},{"type":"path","path":"M748 1003l 7 0 0-130-7 0 0 130","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#e0e0e0","stroke":"none","path":"M628 514l 0 399-16 26-207 0-30-34-197 0-25 34-14 8-9 0 0-289 63-162 11-11 12-11 19-6 3-2 338-3 0 51 52 0z","type":"path"},{"fill":"#000","stroke":"none","path":"M704 605l 0-195 4 0 0 195-4 0z","type":"path"},{"type":"path","path":"M704 605l 4 0 0-195-4 0 0 195","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M626 514A52 49 0 0 0 574 465L574 514z","stroke":"#fff","stroke-width":1,"fill":"#e0e0e0"},{"fill":"#686868","stroke":"none","path":"M728 410l-26-21 2-2 23 19 0 4 1 0z","type":"path"},{"type":"path","path":"M728 410l-26-21 2-2 23 19 0 4","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M940 630l 0-281 93 0 0 281-93 0z","type":"path"},{"type":"path","path":"M940 630l 93 0 0-281-93 0 0 281","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M958 625l 0-264 65 0 0 264-65 0z","type":"path"},{"type":"path","path":"M958 625l 65 0 0-264-65 0 0 264","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"","stroke":"none","path":"M967 452l 0-79 45 0 0 79-45 0z","type":"path"},{"type":"path","path":"M967 452l 45 0 0-79-45 0 0 79","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M1000 753l 0-73 32 0 0 73-32 0z","type":"path"},{"type":"path","path":"M1000 753l 32 0 0-73-32 0 0 73","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M748 726l 4 10 3 6 8 6 6 0 4-1 4-4 4-8 0-7 0-6-2-8-5-3 0 5 0 12 2 7 2 5 4 5 5 3 5 2 7-5 2-6 2-8 0-8-2-7-4-2-3 5 0 9 2 9 2 8 5 3 4 2 10 0 4-2 4-5 1-7 0-8-1-8-5-6-4 0 0 8 0 10 1 7 3 6 5 6 5 2 5 0 5-2 3-4 4-7 1-8-1-6-2-9-5-3-2 6 0 8 2 15 2 5 5 4 5 1 10 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M862 753l 5-1 3-4 4-8 0-9 0-7-3-8-6-5-4 5 0 7 1 6 1 6 2 5 3 5 6 6 4 0 9-1 4-2 3-3 2-8 0-6 0-15-4-7-5 5-1 5-1 10 2 6 6 10 3 3 5 2 3 0 9-2 7-3 3-8 1-9 2-6-3-10-5-5-5 5 0 11 2 17 5 5 4 2 5 1 6 0 9-3 4-9 3-7 2-7-1-8-6-8-5 0-2 5-3 15 1 6 2 7 7 8 6 3 5 0 4-2","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M961 748l 5-3 4 0 3-8 1-9 1-6-1-8-4-7-6 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M965 707l-3 10-1 7 1 7 2 6 1 6 5 5 4 2 5 0 4-2 4-5 2-7 1-14 2-8-2-7-6 4-2 6 0 7 1 12 4 4 5 3 5-1 3-2 3-3","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M984 604l-1-3-3-2-3-1-3 1-3 2-1 3 1 2 3 3 3 1 3-1 3-2 1-3z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":7,"ry":6,"stroke":"#000","fill":"#000","cx":977,"stroke-width":1,"cy":604,"type":"ellipse"},{"type":"path","path":"M1011 604l-1-3-3-2-3-1-3 1-3 2-1 3 1 2 3 3 3 1 3-1 3-2 1-3z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":7,"ry":6,"stroke":"#000","fill":"#000","cx":1004,"stroke-width":1,"cy":604,"type":"ellipse"},{"type":"path","path":"M969 573l 42 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M1090 805l 316 0-109 36 0 36-99 0 0-30-110-42 2 0z","type":"path"},{"type":"path","path":"M1090 805l 316 0-109 36 0 36-99 0 0-30-110-42","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M1471 804l 0 65 11 6 18 15 15 13 6 12 2 4 16 0 0-116-68 1z","type":"path"},{"type":"path","path":"M1471 804l 0 65 11 6 18 15 15 13 6 12 2 4 16 0 0-116","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M1739 919l 0-40 0-6 0-4 1-4 2-2 2-2 4-1 4 0 6 0 214 0 9 0 6 3 1 2 2 4 1 4 1 6 0 40-2 9-3 6-6 3-9 1-214 0-6-1-4 0-4-2-2-1-3-6 0-9z","type":"path"},{"type":"path","path":"M1739 919l 0-40 0-6 0-4 1-4 2-2 2-2 4-1 4 0 6 0 214 0 9 0 6 3 1 2 2 4 1 4 1 6 0 40-2 9-3 6-6 3-9 1-214 0-6-1-4 0-4-2-2-1-3-6 0-9","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1739 919l 0-40 0-6 0-4 1-4 2-2 2-2 4-1 4 0 6 0 214 0 9 0 6 3 1 2 2 4 1 4 1 6 0 40-2 9-3 6-6 3-9 1-214 0-6-1-4 0-4-2-2-1-3-6 0-9","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1739 919l 0-40 0-6 0-4 1-4 2-2 2-2 4-1 4 0 6 0 214 0 9 0 6 3 1 2 2 4 1 4 1 6 0 40-2 9-3 6-6 3-9 1-214 0-6-1-4 0-4-2-2-1-3-6 0-9","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1983 949A47 44 0 0 0 2030 905","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1980 964A64 61 0 0 0 2044 903","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M2031 903l 0-98","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M2043 905l 0-100","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1984 949l-237 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1978 963l-232 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1746 963l 0-14","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M1832 807l 19 22 0 31 18 0 0-32 18-23-56 0 3 2-2 0z","type":"path"},{"type":"path","path":"M1832 807l 19 22 0 31 18 0 0-32 18-23-56 0 3 2","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1669 987l-1-6-2-7-4-5-4-6-5-4-7-3-6-2-7-1-7 1-6 2-7 3-5 4-4 6-4 5-2 7-1 6 1 6 2 7 4 5 4 6 5 4 7 3 6 2 7 1 7-1 6-2 7-3 5-4 4-6 4-5 2-7 1-6z","stroke":"#fff","stroke-width":1,"fill":"#000"},{"rx":36,"ry":34,"stroke":"#000","fill":"#000","cx":1633,"stroke-width":1,"cy":987,"type":"ellipse"},{"fill":"#000","stroke":"none","path":"M1625 965l 0-156 16 0 0 156-16 0z","type":"path"},{"type":"path","path":"M1625 965l 16 0 0-156-16 0 0 156","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M1037 802l 0-489 38 0 0 489-38 0z","type":"path"},{"type":"path","path":"M1037 802l 38 0 0-489-38 0 0 489","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M294 364A55 97 0 0 0 239 461L294 461z","stroke":"#fff","stroke-width":1,"fill":"#444"},{"type":"path","path":"M294 364A55 97 0 0 0 239 461","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M294 364l 0 97-55 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#848484","stroke":"none","path":"M311 425l 0 32 12-7 129-5 0 6 7 6 7-6 0-27-4-4-9 2 0 11-133-5-9-8 0 8 0-3z","type":"path"},{"type":"path","path":"M311 425l 0 32 12-7 129-5 0 6 7 6 7-6 0-27-4-4-9 2 0 11-133-5-9-8 0 8","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M235 465l 0-5 63 0 0 5-63 0z","type":"path"},{"type":"path","path":"M235 465l 63 0 0-5-63 0 0 5","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#848484","stroke":"none","path":"M423 824l 0-278 0-12 1-8 3-8 4-5 5-4 8-3 8-1 11 0 81 0 9 0 10 1 6 3 7 4 3 5 3 8 2 8 1 12 0 278-1 9-2 10-3 6-3 7-7 3-6 3-10 2-9 1-81 0-11-1-8-2-8-3-5-3-4-7-3-6-1-10 0-9z","type":"path"},{"type":"path","path":"M423 824l 0-278 0-12 1-8 3-8 4-5 5-4 8-3 8-1 11 0 81 0 9 0 10 1 6 3 7 4 3 5 3 8 2 8 1 12 0 278-1 9-2 10-3 6-3 7-7 3-6 3-10 2-9 1-81 0-11-1-8-2-8-3-5-3-4-7-3-6-1-10 0-9","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M423 824l 0-278 0-12 1-8 3-8 4-5 5-4 8-3 8-1 11 0 81 0 9 0 10 1 6 3 7 4 3 5 3 8 2 8 1 12 0 278-1 9-2 10-3 6-3 7-7 3-6 3-10 2-9 1-81 0-11-1-8-2-8-3-5-3-4-7-3-6-1-10 0-9","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#e0e0e0","stroke":"none","path":"M423 824l 0-278 0-12 1-8 3-8 4-5 5-4 8-3 8-1 11 0 81 0 9 0 10 1 6 3 7 4 3 5 3 8 2 8 1 12 0 278-1 9-2 10-3 6-3 7-7 3-6 3-10 2-9 1-81 0-11-1-8-2-8-3-5-3-4-7-3-6-1-10 0-9z","type":"path"},{"type":"path","path":"M423 824l 0-278 0-12 1-8 3-8 4-5 5-4 8-3 8-1 11 0 81 0 9 0 10 1 6 3 7 4 3 5 3 8 2 8 1 12 0 278-1 9-2 10-3 6-3 7-7 3-6 3-10 2-9 1-81 0-11-1-8-2-8-3-5-3-4-7-3-6-1-10 0-9","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M128 655l 61-151 16 4 4 12-51 124-6 7-6 2-16 2-2 0z","type":"path"},{"type":"path","path":"M128 655l 61-151 16 4 4 12-51 124-6 7-6 2-16 2","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#848484","stroke":"none","path":"M209 503l-58 11 10-14 17-12 15-7 14-6 9-2 4 13-11 17 0 0z","type":"path"},{"type":"path","path":"M209 503l-58 11 10-14 17-12 15-7 14-6 9-2 4 13-11 17","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#e0e0e0","stroke":"none","path":"M238 507l 124 0 9 2 4 6 3 4 0 5 0 251-3 5-4 5-4 1-2 0-180 0-5-3-2-5 0-5 0-115 1-3 2-8 42-127 3-4 2-4 6-3 1-1 3-1z","type":"path"},{"type":"path","path":"M238 507l 124 0 9 2 4 6 3 4 0 5 0 251-3 5-4 5-4 1-2 0-180 0-5-3-2-5 0-5 0-115 1-3 2-8 42-127 3-4 2-4 6-3 1-1","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M243 521l 107 0 6 1 4 8 0 5 0 97-3 7 0 1-7 2-143 0-4-1-1-2-1-7 33-102 1-3 3-5 5-1 0 0z","type":"path"},{"type":"path","path":"M243 521l 107 0 6 1 4 8 0 5 0 97-3 7 0 1-7 2-143 0-4-1-1-2-1-7 33-102 1-3 3-5 5-1","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M247 661l 0-145 10 0 0 145-10 0z","type":"path"},{"type":"path","path":"M247 661l 10 0 0-145-10 0 0 145","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M326 669l 0-5 0-2 2 0 26 0 1 0 1 2 0 5-1 1-1 1-26 0-2-1 0-1z","type":"path"},{"type":"path","path":"M326 669l 0-5 0-2 2 0 26 0 1 0 1 2 0 5-1 1-1 1-26 0-2-1 0-1","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M326 669l 0-5 0-2 2 0 26 0 1 0 1 2 0 5-1 1-1 1-26 0-2-1 0-1","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M326 669l 0-5 0-2 2 0 26 0 1 0 1 2 0 5-1 1-1 1-26 0-2-1 0-1","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M482 626l 0-83 0-6 2-3 3-2 6 0 23 0 4 0 4 2 2 3 1 6 0 83-1 5-2 3-4 2-4 1-23 0-6-1-3-2-2-3 0-5z","type":"path"},{"type":"path","path":"M482 626l 0-83 0-6 2-3 3-2 6 0 23 0 4 0 4 2 2 3 1 6 0 83-1 5-2 3-4 2-4 1-23 0-6-1-3-2-2-3 0-5","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M482 626l 0-83 0-6 2-3 3-2 6 0 23 0 4 0 4 2 2 3 1 6 0 83-1 5-2 3-4 2-4 1-23 0-6-1-3-2-2-3 0-5","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M482 626l 0-83 0-6 2-3 3-2 6 0 23 0 4 0 4 2 2 3 1 6 0 83-1 5-2 3-4 2-4 1-23 0-6-1-3-2-2-3 0-5","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M256 847l 0-34 119 0 0 34-119 0z","type":"path"},{"type":"path","path":"M256 847l 119 0 0-34-119 0 0 34","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#a3a3a3","stroke":"none","path":"M156 859l 0-9 1-4 4-1 31 0 4 1 1 4 0 9-1 4-4 1-31 0-4-1-1-4z","type":"path"},{"type":"path","path":"M156 859l 0-9 1-4 4-1 31 0 4 1 1 4 0 9-1 4-4 1-31 0-4-1-1-4","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M156 859l 0-9 1-4 4-1 31 0 4 1 1 4 0 9-1 4-4 1-31 0-4-1-1-4","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M156 859l 0-9 1-4 4-1 31 0 4 1 1 4 0 9-1 4-4 1-31 0-4-1-1-4","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M467 1007l-1-5-2-5-4-4-4-4-5-2-5-1-5 1-5 2-4 4-4 4-2 5-1 5 1 5 2 5 4 4 4 4 5 2 5 1 5-1 5-2 4-4 4-4 2-5 1-5z","stroke":"#fff","stroke-width":1,"fill":"#e0e0e0"},{"r":21,"stroke":"#000","fill":"#000","cx":446,"stroke-width":1,"cy":1007,"type":"circle"},{"type":"path","path":"M521 1007l-1-5-2-5-4-4-4-4-5-2-5-1-5 1-5 2-4 4-4 4-2 5-1 5 1 5 2 5 4 4 4 4 5 2 5 1 5-1 5-2 4-4 4-4 2-5 1-5z","stroke":"#fff","stroke-width":1,"fill":"#e0e0e0"},{"r":21,"stroke":"#000","fill":"#000","cx":500,"stroke-width":1,"cy":1007,"type":"circle"},{"fill":"#fff","stroke":"none","path":"M442 940l 1 97 6 6 51 0 4-6 0-97 2 0 1 100-7 7-51 0-10-8 0-99 3 0z","type":"path"},{"type":"path","path":"M442 940l 1 97 6 6 51 0 4-6 0-97 2 0 1 100-7 7-51 0-10-8 0-99 3 0","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M441 996l 0-4 62 0 0 4-62 0z","type":"path"},{"type":"path","path":"M441 996l 62 0 0-4-62 0 0 4","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#848484","stroke":"none","path":"M297 833l 0-7 0-3 3 0 31 0 2 0 1 3 0 7-1 2-2 1-31 0-3-1 0-2z","type":"path"},{"type":"path","path":"M297 833l 0-7 0-3 3 0 31 0 2 0 1 3 0 7-1 2-2 1-31 0-3-1 0-2","stroke":"#000","stroke-width":1,"fill":"#000"},{"type":"path","path":"M297 833l 0-7 0-3 3 0 31 0 2 0 1 3 0 7-1 2-2 1-31 0-3-1 0-2","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M297 833l 0-7 0-3 3 0 31 0 2 0 1 3 0 7-1 2-2 1-31 0-3-1 0-2z","type":"path"},{"type":"path","path":"M297 833l 0-7 0-3 3 0 31 0 2 0 1 3 0 7-1 2-2 1-31 0-3-1 0-2","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M433 765l 0-82 0-3 3 0 6 0 2 0 1 3 0 82-1 2-2 1-6 0-3-1 0-2z","type":"path"},{"type":"path","path":"M433 765l 0-82 0-3 3 0 6 0 2 0 1 3 0 82-1 2-2 1-6 0-3-1 0-2","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M433 765l 0-82 0-3 3 0 6 0 2 0 1 3 0 82-1 2-2 1-6 0-3-1 0-2","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M433 765l 0-82 0-3 3 0 6 0 2 0 1 3 0 82-1 2-2 1-6 0-3-1 0-2","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M1190 601l 0-136 0-18 3-15 4-12 7-9 8-7 12-4 15-3 18 0 1447 0 17 0 14 3 12 4 10 7 6 9 5 12 2 15 2 18 0 136-2 17-2 14-5 12-6 10-10 6-12 5-14 2-17 2-1447 0-18-2-15-2-12-5-8-6-7-10-4-12-3-14 0-17z","type":"path"},{"type":"path","path":"M1190 601l 0-136 0-18 3-15 4-12 7-9 8-7 12-4 15-3 18 0 1447 0 17 0 14 3 12 4 10 7 6 9 5 12 2 15 2 18 0 136-2 17-2 14-5 12-6 10-10 6-12 5-14 2-17 2-1447 0-18-2-15-2-12-5-8-6-7-10-4-12-3-14 0-17","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1190 601l 0-136 0-18 3-15 4-12 7-9 8-7 12-4 15-3 18 0 1447 0 17 0 14 3 12 4 10 7 6 9 5 12 2 15 2 18 0 136-2 17-2 14-5 12-6 10-10 6-12 5-14 2-17 2-1447 0-18-2-15-2-12-5-8-6-7-10-4-12-3-14 0-17","stroke":"#fff","stroke-width":1,"fill":"#000"},{"type":"path","path":"M1190 601l 0-136 0-18 3-15 4-12 7-9 8-7 12-4 15-3 18 0 1447 0 17 0 14 3 12 4 10 7 6 9 5 12 2 15 2 18 0 136-2 17-2 14-5 12-6 10-10 6-12 5-14 2-17 2-1447 0-18-2-15-2-12-5-8-6-7-10-4-12-3-14 0-17","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M113 958l 0-99 1-7 6-1 16 0 6 1 2 7 0 99-2 6-6 2-16 0-6-2-1-6z","type":"path"},{"type":"path","path":"M113 958l 0-99 1-7 6-1 16 0 6 1 2 7 0 99-2 6-6 2-16 0-6-2-1-6","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M309 429l 10 3 133 4-135 0-8 3 0-10z","type":"path"},{"type":"path","path":"M309 429l 10 3 133 4-135 0-8 3 0-10","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M466 436l 4-7 1 0 4 0 3 0 0 3 1 3 2 6-1 1 0 3-1 3-1 3-2 4-1 3 0 2 1 3-10-27z","type":"path"},{"type":"path","path":"M466 436l 4-7 1 0 4 0 3 0 0 3 1 3 2 6-1 1 0 3-1 3-1 3-2 4-1 3 0 2 1 3","stroke":"#000","stroke-width":1,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M723 978l 0-9 0-4 4 0 47 0 3 0 1 4 0 9-1 3-3 1-47 0-4-1 0-3z","type":"path"},{"type":"path","path":"M723 978l 0-9 0-4 4 0 47 0 3 0 1 4 0 9-1 3-3 1-47 0-4-1 0-3","stroke":"#000","stroke-width":18,"fill":"#000"},{"fill":"#fff","stroke":"none","path":"M733 979l 0-8 37 0 0 8-37 0z","type":"path"},{"type":"path","path":"M733 979l 37 0 0-8-37 0 0 8","stroke":"#fff","stroke-width":1,"fill":"#000"},{"fill":"#000","stroke":"none","path":"M628 896l 0-8 238 0 0 8-238 0z","type":"path"},{"type":"path","path":"M628 896l 238 0 0-8-238 0 0 8","stroke":"#000","stroke-width":1,"fill":"#000"}];
+
+
+paper.rect(0,0,1200,800).attr({fill:"grey"});
+	
+var airplane = paper.add(mySVG).transform("s0.15, 0.15, 0, 0");// r45");
+
+//var tpath= Raphael.transformPath('t100,100 ');
+//g634.animate({transform: "t100,100"}, 10000);
+ //airplane.translate("100 100");
+ //var anim = Raphael.animation({x:100, y:100, x1:200, y1:200}, 3000);
+//airplane.animate(anim);
+// you have to rescale it as you transform to keep the same size
+airplane.animate({transform: "t100,0 s.15,.15,0,0"}, 10000);
+// Creates circle at x = 50, y = 40, with radius 10
+
+
+
+function animate_slide2() {
+ if (paper2 != null)
+ 	paper2.clear();
+ paper2 = Raphael(document.getElementById('s2anim'),0, 0, 320, 200);
+
+// Creates circle at x = 50, y = 40, with radius 10
+var circle = paper2.circle(50, 40, 10);
+// Sets the fill attribute of the circle to red (#f00)
+circle.attr("fill", "green");
+
+// Sets the stroke attribute of the circle to white
+circle.attr("stroke", "#fff");
+var tpath= Raphael.transformPath('t200,100 ');
+var anim = Raphael.animation({transform:'t100,100'}, 3000);
+circle.animate(anim);
+
+}
+
+ 
+</script>
+ 
+ 
+ <script type="text/javascript">
+ 	var dataset = "";
+ 	var page = 1;
+    var viewdata = "";
+ 	
+ 	var max = 0;
+ 	d3.json("http://localhost:5000/gsa_json", function(d) {
+ 		dataset = d;
+ 	    max = d3.max(dataset, function(d,i) { return d.count;});
+ 		viewdata = dataset.slice((page-1)*10, page*10);
+ 		
+		renderChart();
+ 	});
+ 	
+ 	
+ 	$('#arrow').click(function() {
+			if (page*10 > dataset.length) {
+				page = 1;
+				}
+		    page++;
+		    //pagination on the data set
+		    viewdata = dataset.slice((page-1)*10,page*10);
+		    console.log(viewdata.length);
+		    renderChart();
+	});
+ 	
+ 	function renderChart() {
+ 				d3.select("#chart1").selectAll("div")
+	       .remove();
+ 	
+	 	d3.select("#chart")
+	 		.append("text").text(max);
+	 		
+	  	var colsc = 	d3.scale.category10().domain(d3.range(10));
+	  	
+	  	var scale = d3.scale.linear()
+                    .domain([100, 500])
+                    .range([10, 350]);
+	  	
+	  	// gives us a scale that can map domain vales 
+	  	// to  afixed number of 10 buckets
+	  	// that we will use to get a color 0-10 that represents sizing group
+	  	var colmap = d3.scale.quantize()
+	  		.domain(d3.range(0, 7000))
+	  		.range(d3.range(0,10));
+	  		
+	 	var x = d3.scale.linear()
+		    .domain([0, max])
+		    .range([0, 800]);	
+		    
+	 		
+	 	d3.select("#chart1")
+	 		
+	 		
+	 		.selectAll("div")
+	 		.data(viewdata)
+	 		.enter()
+	 		
+	 		.append("div")
+	 		.attr("class","chart")
+    			.style("width", function(d) { return x(d.count) + "px"; })
+    			.style("background-color", function(d) { return colsc(colmap(d.count));})
+    			.text(function(d) { return d.airline; })
+    			.style("font-size","16px")
+    			.style("font-weight","bold")
+    		.on("mouseover", function() {
+    			textshow = d3.select(this).append("p").text(function(d) { return d.count;}).style("text-align","left")
+    			.style("float","left").style("color","yellow")
+    			.style("font-size","18px")
+    			.attr("color","red");
+    		})
+    		 .on("mouseout", function() {
+    		 	var t = d3.select(this);
+    		 	//alert (d3.select(t.text));
+				textshow.remove();
+	         });
+ 		
+ 	}
+ </script>
+
+<style type="text/css">
+
+ .chart div {
+  font: 10px sans-serif;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+  height:50px;
+}
+
+
+  /*
+  We start with a good ol' reset.
+  That's the one by Eric Meyer http://meyerweb.com/eric/tools/css/reset/
+
+  You can probably argue if it is needed here, or not, but for sure it
+  doesn't do any harm and gives us a fresh start.
+  */
+  html {
+  width:100%;
+  height:100%;
+  }
+
+  body {
+  padding: 0px;
+  margin: 0px;
+  width:100%;
+  height:100%;
+  }
+  #impress {
+  width:100%;
+  height:100%;
+  }
+  .impress-enabled {
+  width:100%;
+  height:100%;
+  }
+
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  }+
+
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure,
+  footer, header, hgroup, menu, nav, section {
+  display: block;
+  }
+  body {
+  line-height: 1;
+  }
+  ol, ul {
+  list-style: none;
+  }
+  blockquote, q {
+  quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+  content: '';
+  content: none;
+  }
+
+  table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  }
+
+  /*
+  Now here is when interesting things start to appear.
+
+  We set up <body>
+    styles with default font and nice gradient in the background.
+    And yes, there is a lot of repetition there because of -prefixes but we don't
+    want to leave anybody behind.
+    */
+    body {
+    font-family: 'PT Sans', sans-serif;
+    min-height: 740px;
+
+    background: rgb(215, 215, 215);
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
+    background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:     -ms-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    }
+
+    /*
+    Now let's bring some text styles back ...
+    */
+    b, strong { font-weight: bold }
+    i, em { font-style: italic }
+
+    /*
+    ... and give links a nice look.
+    */
+    a {
+    color: inherit;
+    text-decoration: none;
+    padding: 0 0.1em;
+    background: rgba(255,255,255,0.5);
+    text-shadow: -1px -1px 2px rgba(100,100,100,0.9);
+    border-radius: 0.2em;
+
+    -webkit-transition: 0.5s;
+    -moz-transition:    0.5s;
+    -ms-transition:     0.5s;
+    -o-transition:      0.5s;
+    transition:         0.5s;
+    }
+
+    a:hover,
+    a:focus {
+    background: rgba(255,255,255,1);
+    text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
+    }
+
+    /*
+    Because the main point behind the impress.js demo is to demo impress.js
+    we display a fallback message for users with browsers that don't support
+    all the features required by it.
+
+    All of the content will be still fully accessible for them, but I want
+    them to know that they are missing something - that's what the demo is
+    about, isn't it?
+
+    And then we hide the message, when support is detected in the browser.
+    */
+
+    .fallback-message {
+    font-family: sans-serif;
+    line-height: 1.3;
+
+    width: 780px;
+    padding: 10px 10px 0;
+    margin: 20px auto;
+
+    border: 1px solid #E4C652;
+    border-radius: 10px;
+    background: #EEDC94;
+    }
+
+    .fallback-message p {
+    margin-bottom: 10px;
+    }
+
+    .impress-supported .fallback-message {
+    display: none;
+    }
+
+    /*
+    Now let's style the presentation steps.
+
+    We start with basics to make sure it displays correctly in everywhere ...
+    */
+
+    .step {
+    position: relative;
+    width: 900px;
+    padding: 40px;
+    margin: 20px auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    -ms-box-sizing:     border-box;
+    -o-box-sizing:      border-box;
+    box-sizing:         border-box;
+
+    font-family: 'PT Serif', georgia, serif;
+    font-size: 48px;
+    line-height: 1.5;
+    }
+
+    /*
+    ... and we enhance the styles for impress.js.
+
+    Basically we remove the margin and make inactive steps a little bit transparent.
+    */
+    .impress-enabled .step {
+    margin: 0;
+    opacity: 0.0;
+
+    -webkit-transition: opacity 1s;
+    -moz-transition:    opacity 1s;
+    -ms-transition:     opacity 1s;
+    -o-transition:      opacity 1s;
+    transition:         opacity 1s;
+    pointer-events: none;
+    }
+
+    .impress-enabled .step.active {
+    opacity: 1;
+    pointer-events: auto;
+    }
+
+    /*
+    These 'slide' step styles were heavily inspired by HTML5 Slides:
+    http://html5slides.googlecode.com/svn/trunk/styles.css
+
+    ;)
+
+    They cover everything what you see on first three steps of the demo.
+    */
+    .slide {
+    display: block;
+
+    width: 900px;
+    height: 700px;
+    padding: 40px 60px;
+
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+
+    color: rgb(102, 102, 102);
+    text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: -1px;
+    }
+
+    .slide q {
+    display: block;
+    font-size: 50px;
+    line-height: 72px;
+
+    margin-top: 100px;
+    }
+
+    .slide q strong {
+    white-space: nowrap;
+    }
+
+    /*
+    And now we start to style each step separately.
+
+    I agree that this may be not the most efficient, object-oriented and
+    scalable way of styling, but most of steps have quite a custom look
+    and typography tricks here and there, so they had to be styles separately.
+
+    First is the title step with a big <h1>
+      (no room for padding) and some
+      3D positioning along Z axis.
+      */
+
+      #title {
+      padding: 0;
+      }
+
+      #title .try {
+      font-size: 64px;
+      position: absolute;
+      top: -0.5em;
+      left: 1.5em;
+
+      -webkit-transform: translateZ(20px);
+      -moz-transform:    translateZ(20px);
+      -ms-transform:     translateZ(20px);
+      -o-transform:      translateZ(20px);
+      transform:         translateZ(20px);
+      }
+
+      #title h1 {
+      font-size: 190px;
+
+      -webkit-transform: translateZ(50px);
+      -moz-transform:    translateZ(50px);
+      -ms-transform:     translateZ(50px);
+      -o-transform:      translateZ(50px);
+      transform:         translateZ(50px);
+      }
+
+      #title .footnote {
+      font-size: 32px;
+      }
+
+      /*
+      Second step is nothing special, just a text with a link, so it doesn't need
+      any special styling.
+
+      Let's move to 'big thoughts' with centered text and custom font sizes.
+      */
+      #big {
+      width: 600px;
+      text-align: center;
+      font-size: 60px;
+      line-height: 1;
+      }
+
+      #big b {
+      display: block;
+      font-size: 250px;
+      line-height: 250px;
+      }
+
+      #big .thoughts {
+      font-size: 90px;
+      line-height: 150px;
+      }
+
+      /*
+      'Tiny ideas' just need some tiny styling.
+      */
+      #tiny {
+      width: 500px;
+      text-align: center;
+      }
+
+      /*
+      This step has some animated text ...
+      */
+      #ing { width: 500px }
+
+      /*
+      ... so we define display to `inline-block` to enable transforms and
+      transition duration to 0.5s ...
+      */
+      #ing b {
+      display: inline-block;
+      -webkit-transition: 0.5s;
+      -moz-transition:    0.5s;
+      -ms-transition:     0.5s;
+      -o-transition:      0.5s;
+      transition:         0.5s;
+      }
+
+      /*
+      ... and we want 'positioning` word to move up a bit when the step gets
+      `present` class ...
+      */
+      #ing.present .positioning {
+      -webkit-transform: translateY(-10px);
+      -moz-transform:    translateY(-10px);
+      -ms-transform:     translateY(-10px);
+      -o-transform:      translateY(-10px);
+      transform:         translateY(-10px);
+      }
+
+      /*
+      ... 'rotating' to rotate quater of a second later ...
+      */
+      #ing.present .rotating {
+      -webkit-transform: rotate(-10deg);
+      -moz-transform:    rotate(-10deg);
+      -ms-transform:     rotate(-10deg);
+      -o-transform:      rotate(-10deg);
+      transform:         rotate(-10deg);
+
+      -webkit-transition-delay: 0.25s;
+      -moz-transition-delay:    0.25s;
+      -ms-transition-delay:     0.25s;
+      -o-transition-delay:      0.25s;
+      transition-delay:         0.25s;
+      }
+
+      /*
+      ... and 'scaling' to scale down after another quater of a second.
+      */
+      #ing.present .scaling {
+      -webkit-transform: scale(0.7);
+      -moz-transform:    scale(0.7);
+      -ms-transform:     scale(0.7);
+      -o-transform:      scale(0.7);
+      transform:         scale(0.7);
+
+      -webkit-transition-delay: 0.5s;
+      -moz-transition-delay:    0.5s;
+      -ms-transition-delay:     0.5s;
+      -o-transition-delay:      0.5s;
+      transition-delay:         0.5s;
+      }
+
+      /*
+      The 'imagination' step is again some boring font-sizing.
+      */
+
+      #imagination {
+      width: 600px;
+      }
+
+      #imagination .imagination {
+      font-size: 78px;
+      }
+
+      /*
+      There is nothing really special about 'use the source, Luke' step, too,
+      except maybe of the Yoda background.
+
+      As you can see below I've 'hard-coded' it in data URL.
+      That's not the best way to serve images, but because that's just this one
+      I decided it will be OK to have it this way.
+
+      Just make sure you don't blindly copy this approach.
+      */
+      #source {
+      width: 700px;
+      padding-bottom: 300px;
+
+      /* Yoda Icon :: Pixel Art from Star Wars http://www.pixeljoint.com/pixelart/1423.htm */
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEYCAMAAACwUBm+AAAAAXNSR0IArs4c6QAAAKtQTFRFsAAAvbWSLUUrLEQqY1s8UYJMqJ1vNTEgOiIdIzYhjIFVLhsXZ6lgSEIsP2U8JhcCVzMsSXZEgXdOO145XJdWOl03LzAYMk4vSXNExr+hwcuxRTs1Qmk+RW9Am49eFRANQz4pUoNMQWc+OSMDTz0wLBsCNVMxa2NBOyUDUoNNSnlEWo9VRGxAVzYFl6tXCggHbLNmMUIcHhwTXkk5f3VNRT8wUT8xAAAACQocRBWFFwAAAAF0Uk5TAEDm2GYAAAPCSURBVHja7d3JctNAFIZRMwRCCGEmzPM8z/D+T8bu/ptbXXJFdij5fMt2Wuo+2UgqxVmtttq5WVotLzBgwIABAwYMGDCn0qVqbo69psPqVpWx+1XG5iaavF8wYMCAAQMGDBgwi4DJ6Y6qkxB1HNlcN3a92gbR5P2CAQMGDBgwYMCAWSxMlrU+UY5yu2l9okfV4bAxUVbf7TJnAwMGDBgwYMCAAbMLMHeqbGR82Zy+VR1Ht81nVca6R+UdTLaU24Ruzd3qM/e4yjnAgAEDBgwYMGDA7AJMd1l/3NRdVGcj3eX/2WEhCmDGxnM7yqygu8XIPjJj8iN/MGDAgAEDBgwYMAuDGb8q0RGlLCHLv1t9qDKWn3vdNHVuEI6HPaxO9Jo3GDBgwIABAwYMmIXBdC9ShGgMk+XnkXUeuGcsP/e1+lhNnZsL/G5Vs3OAAQMGDBgwYMCAWSxMR3SzOmraG5atdy9wZKzb+vg16qyqe2FltbnAgAEDBgwYMGDALAxmTJSuN3WA76rnVca6GTnemGN1WoEBAwYMGDBgwIBZGMxUomy4+xO899V4LAg5Xnc2MGDAgAEDBgwYMGA218Wq+2K1LDqvY9xZu8zN8fICdM6btYABAwYMGDBgwIABMzfH0+pGU5afze2tXebmeAfVz+p8BQYMGDBgwIABAwbMPBzZ+oWmfJrln1273FhkbHzee9WWbw7AgAEDBgwYMGDALAKm43hcdctKgblcPamOhuXnXlY5Xs6bsW4FGyQCAwYMGDBgwIABswiYMceZKgvMo+h8mrHLTdn676rj+FEFoTtHd8MwOxEYMGDAgAEDBgyYRcBM5UhXqiymW3R3c9ARhWO/OmjqfjVZy+xEYMCAAQMGDBgwYBYG073OnCV0RFNhMhaOa9WfKmOB6XjHMN1tQmaAAQMGDBgwYMCA2VWY7vXjz1U4croAzgPztwIDBgwYMGDAgAEDZhswh035NBw59Dww3RgYMGDAgAEDBgwYMJuD6f4tXT7NUqfCdBvZLkxXdgQGDBgwYMCAAQNmt2DGj8WzwAfV/w7T/aq7mxwwYMCAAQMGDBgwuwqTOo7uTwTngflSzQ3TdaJvAwEDBgwYMGDAgAED5gSvgbyo5oHZ4Pc+gwEDBgwYMGDAgAEzhOm+5G0qTGaAAQMGDBgwYMCAAXNaMOcnls3tNwWm+zRzp54NDBgwYMCAAQMGDJh5YNL36k1TLuGvVq+qnKMbS5n7tulT9asCAwYMGDBgwIABA2ZumKuztLnjgQEDBgwYMGDAgNl5mH/4/ltKA6vBNAAAAABJRU5ErkJggg==);
+      background-position: bottom right;
+      background-repeat: no-repeat;
+      }
+
+      #source q {
+      font-size: 60px;
+      }
+
+      /*
+      And the "it's in 3D" step again brings some 3D typography - just for fun.
+
+      Because we want to position <span>
+        elements in 3D we set transform-style to
+        `preserve-3d` on the paragraph.
+        It is not needed by webkit browsers, but it is in Firefox. It's hard to say
+        which behaviour is correct as 3D transforms spec is not very clear about it.
+        */
+        #its-in-3d p {
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style:    preserve-3d; /* Y U need this Firefox?! */
+        -ms-transform-style:     preserve-3d;
+        -o-transform-style:      preserve-3d;
+        transform-style:         preserve-3d;
+        }
+
+        /*
+        Below we position each word separately along Z axis and we want it to transition
+        to default position in 0.5s when the step gets `present` class.
+
+        Quite a simple idea, but lot's of styles and prefixes.
+        */
+        #its-in-3d span,
+        #its-in-3d b {
+        display: inline-block;
+        -webkit-transform: translateZ(40px);
+        -moz-transform:    translateZ(40px);
+        -ms-transform:     translateZ(40px);
+        -o-transform:      translateZ(40px);
+        transform:        translateZ(40px);
+
+        -webkit-transition: 0.5s;
+        -moz-transition:    0.5s;
+        -ms-transition:     0.5s;
+        -o-transition:      0.5s;
+        transition:         0.5s;
+        }
+
+        #its-in-3d .have {
+        -webkit-transform: translateZ(-40px);
+        -moz-transform:    translateZ(-40px);
+        -ms-transform:     translateZ(-40px);
+        -o-transform:      translateZ(-40px);
+        transform:         translateZ(-40px);
+        }
+
+        #its-in-3d .you {
+        -webkit-transform: translateZ(20px);
+        -moz-transform:    translateZ(20px);
+        -ms-transform:     translateZ(20px);
+        -o-transform:      translateZ(20px);
+        transform:         translateZ(20px);
+        }
+
+        #its-in-3d .noticed {
+        -webkit-transform: translateZ(-40px);
+        -moz-transform:    translateZ(-40px);
+        -ms-transform:     translateZ(-40px);
+        -o-transform:      translateZ(-40px);
+        transform:         translateZ(-40px);
+        }
+
+        #its-in-3d .its {
+        -webkit-transform: translateZ(60px);
+        -moz-transform:    translateZ(60px);
+        -ms-transform:     translateZ(60px);
+        -o-transform:      translateZ(60px);
+        transform:         translateZ(60px);
+        }
+
+        #its-in-3d .in {
+        -webkit-transform: translateZ(-10px);
+        -moz-transform:    translateZ(-10px);
+        -ms-transform:     translateZ(-10px);
+        -o-transform:      translateZ(-10px);
+        transform:         translateZ(-10px);
+        }
+
+        #its-in-3d .footnote {
+        font-size: 32px;
+
+        -webkit-transform: translateZ(-10px);
+        -moz-transform:    translateZ(-10px);
+        -ms-transform:     translateZ(-10px);
+        -o-transform:      translateZ(-10px);
+        transform:         translateZ(-10px);
+        }
+
+        #its-in-3d.present span,
+        #its-in-3d.present b {
+        -webkit-transform: translateZ(0px);
+        -moz-transform:    translateZ(0px);
+        -ms-transform:     translateZ(0px);
+        -o-transform:      translateZ(0px);
+        transform:         translateZ(0px);
+        }
+
+        /*
+        The last step is an overview.
+        There is no content in it, so we make sure it's not visible because we want
+        to be able to click on other steps.
+
+        */
+        #overview { display: none }
+
+        /*
+        We also make other steps visible and give them a pointer cursor using the
+        `impress-on-` class.
+        */
+        .impress-on-overview .step {
+        opacity: 1;
+        cursor: pointer;
+        }
+
+
+        /*
+        Now, when we have all the steps styled let's give users a hint how to navigate
+        around the presentation.
+
+        The best way to do this would be to use JavaScript, show a delayed hint for a
+        first time users, then hide it and store a status in cookie or localStorage...
+
+        But I wanted to have some CSS fun and avoid additional scripting...
+
+        Let me explain it first, so maybe the transition magic will be more readable
+        when you read the code.
+
+        First of all I wanted the hint to appear only when user is idle for a while.
+        You can't detect the 'idle' state in CSS, but I delayed a appearing of the
+        hint by 5s using transition-delay.
+
+        You also can't detect in CSS if the user is a first-time visitor, so I had to
+        make an assumption that I'll only show the hint on the first step. And when
+        the step is changed hide the hint, because I can assume that user already
+        knows how to navigate.
+
+        To summarize it - hint is shown when the user is on the first step for longer
+        than 5 seconds.
+
+        The other problem I had was caused by the fact that I wanted the hint to fade
+        in and out. It can be easily achieved by transitioning the opacity property.
+        But that also meant that the hint was always on the screen, even if totally
+        transparent. It covered part of the screen and you couldn't correctly clicked
+        through it.
+        Unfortunately you cannot transition between display `block` and `none` in pure
+        CSS, so I needed a way to not only fade out the hint but also move it out of
+        the screen.
+
+        I solved this problem by positioning the hint below the bottom of the screen
+        with CSS transform and moving it up to show it. But I also didn't want this move
+        to be visible. I wanted the hint only to fade in and out visually, so I delayed
+        the fade in transition, so it starts when the hint is already in its correct
+        position on the screen.
+
+        I know, it sounds complicated ... maybe it would be easier with the code?
+        */
+
+        .hint {
+        /*
+        We hide the hint until presentation is started and from browsers not supporting
+        impress.js, as they will have a linear scrollable view ...
+        */
+        display: none;
+
+        /*
+        ... and give it some fixed position and nice styles.
+        */
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 200px;
+
+        background: rgba(0,0,0,0.5);
+        color: #EEE;
+        text-align: center;
+
+        font-size: 50px;
+        padding: 20px;
+
+        z-index: 100;
+
+        /*
+        By default we don't want the hint to be visible, so we make it transparent ...
+        */
+        opacity: 0;
+
+        /*
+        ... and position it below the bottom of the screen (relative to it's fixed position)
+        */
+        -webkit-transform: translateY(400px);
+        -moz-transform:    translateY(400px);
+        -ms-transform:     translateY(400px);
+        -o-transform:      translateY(400px);
+        transform:         translateY(400px);
+
+        /*
+        Now let's imagine that the hint is visible and we want to fade it out and move out
+        of the screen.
+
+        So we define the transition on the opacity property with 1s duration and another
+        transition on transform property delayed by 1s so it will happen after the fade out
+        on opacity finished.
+
+        This way user will not see the hint moving down.
+        */
+        -webkit-transition: opacity 1s, -webkit-transform 0.5s 1s;
+        -moz-transition:    opacity 1s,    -moz-transform 0.5s 1s;
+        -ms-transition:     opacity 1s,     -ms-transform 0.5s 1s;
+        -o-transition:      opacity 1s,      -o-transform 0.5s 1s;
+        transition:         opacity 1s,         transform 0.5s 1s;
+        }
+
+        /*
+        Now we 'enable' the hint when presentation is initialized ...
+        */
+        .impress-enabled .hint { display: block }
+
+        /*
+        ... and we will show it when the first step (with id 'bored') is active.
+        */
+        .impress-on-bored .hint {
+        /*
+        We remove the transparency and position the hint in its default fixed
+        position.
+        */
+        opacity: 1;
+
+        -webkit-transform: translateY(0px);
+        -moz-transform:    translateY(0px);
+        -ms-transform:     translateY(0px);
+        -o-transform:      translateY(0px);
+        transform:         translateY(0px);
+
+        /*
+        Now for fade in transition we have the oposite situation from the one
+        above.
+
+        First after 4.5s delay we animate the transform property to move the hint
+        into its correct position and after that we fade it in with opacity
+        transition.
+        */
+        -webkit-transition: opacity 1s 5s, -webkit-transform 0.5s 4.5s;
+        -moz-transition:    opacity 1s 5s,    -moz-transform 0.5s 4.5s;
+        -ms-transition:     opacity 1s 5s,     -ms-transform 0.5s 4.5s;
+        -o-transition:      opacity 1s 5s,      -o-transform 0.5s 4.5s;
+        transition:         opacity 1s 5s,         transform 0.5s 4.5s;
+        }
+
+        /*
+        And as the last thing there is a workaround for quite strange bug.
+        It happens a lot in Chrome. I don't remember if I've seen it in Firefox.
+
+        Sometimes the element positioned in 3D (especially when it's moved back
+        along Z axis) is not clickable, because it falls 'behind' the <body>
+          element.
+
+          To prevent this, I decided to make <body> non clickable by setting 
+    pointer-events property to `none` value.
+    Value if this property is inherited, so to make everything else clickable
+    I bring it back on the #impress element.
+    
+    If you want to know more about `pointer-events` here are some docs:
+    https://developer.mozilla.org/en/CSS/pointer-events
+    
+    There is one very important thing to notice about this workaround - it makes
+    everything 'unclickable' except what's in #impress element.
+    
+    So use it wisely ... or don't use at all.
+*/
+.impress-enabled          { pointer-events: none }
+.impress-enabled #impress { pointer-events: auto }
+
+/*
+    There is one funny thing I just realized.
+    
+    Thanks to this workaround above everything except #impress element is invisible
+    for click events. That means that the hint element is also not clickable.
+    So basically all of this transforms and delayed transitions trickery was probably
+    not needed at all...
+    
+    But it was fun to learn about it, wasn't it?
+*/
+
+/*
+    That's all I have for you in this file.
+    Thanks for reading. I hope you enjoyed it at least as much as I enjoyed writing it
+    for you.
+*/
+</style>
+
+	</body>
+</html>
