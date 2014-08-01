@@ -1,0 +1,280 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<html>
+    <head>
+        <title>Raphael Play</title>
+            <script  type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        
+     </head>
+    <body>
+    
+       <div id="panel"  class = "container" style="background-color:white;">
+       <div class="row" style="margin-bottom:100px;margin-top:100px;">
+       		<div class="col-lg-4">
+       			<div class="col-lg-4"><p span style="font-size:20pt;color:red; ">{{ qresults['totalrooms'] }}</p></div>
+       			<div class="col-lg-8"><p span style="font-size:12pt ">Total Rooms Available to Sell </p> </div>
+       		</div>
+       		<div class="col-lg-4">
+       			<div class="col-lg-4"><p span style="font-size:20pt;color:blue ">{{ qresults['ratesum']/qresults['totalrooms'] }}</p></div>
+       			<div class="col-lg-8"><p span style="font-size:12pt ">Projected ADR </p> </div>
+       		</div>
+       		<div class="col-lg-4">
+       			<div class="col-lg-4"><p span style="font-size:20pt ">{{ qresults['occupypct']}}</p></div>
+       			<div class="col-lg-8"><p span style="font-size:12pt ">Projected Occupancy </p> </div>
+       		</div>
+       		
+       	</div>
+       	<div class="row" style="background-color:#F2F6FA;">
+       	  <div class="donuts col-lg-4" >
+         
+		        <p span style="font-size:20pt ">Today's Activity<p>
+		       <div id="summary" class="col-lg-1 column" ></div>  
+			   <div id="viz"  class="col-lg-1 column"  > </div>
+	        
+	  	  </div>  
+	  	  
+	  	  <div class="donuts col-lg-4" >
+         
+		        <p span style="font-size:20pt ">Hotel Inventory<p>
+		        <p span style="font-size:12pt "></span></p>
+	        <div id="summary2" class="col-lg-1 column" ></div>  
+		        
+		         <div id="viz2" class="col-lg-1 column" ></div>
+	  	  </div>  
+	  	  
+	  	  <div class="donuts col-lg-4" >
+         
+		        <p span style="font-size:20pt ">Today's Statistics<p>
+		        <p span style="font-size:12pt "></span></p>
+	        <div id="summary3" class="col-lg-1 column" ></div>  
+		        
+		     <div id="viz3" class="col-sm-1 column"></div>
+	  	  </div>  
+	  	</div>
+      </div>
+    </body>
+</html>
+
+
+
+
+<script>
+var paper = new Raphael(document.getElementById('summary'), 150,350);
+    
+
+
+var dataset = {
+ // guests: [53245, 28479, 19697, 24037, 40245],
+    guests:[{{ qresults['arrived'] }},{{ qresults['walkins'] }},{{ qresults['checkouts'] }},{{ qresults['earlycheckout'] }}],
+    legend:["Arrived","Walkins","Checkouts","Early Checkouts"],
+    
+};
+
+    console.log(dataset.guests.count);
+    
+var width = 400,
+    height = 260,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.category20();
+
+var pie = d3.layout.pie()
+    .sort(null);
+
+var arc = d3.svg.arc()
+    .innerRadius(radius - 100)
+    .outerRadius(radius - 50);
+
+//var vis = d3.select("#viz").append("svg:svg").attr("width", w).attr("height", h);
+
+
+var svg = d3.select("#viz").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var path = svg.selectAll("path")
+    .data(pie(dataset.guests))
+  .enter().append("path")
+    .attr("fill", function(d, i) { return color(i); })
+    .attr("d", arc);
+    
+    var idx =0;
+    var x=25;
+    var y=90;
+   console.log(dataset.guests.length);
+    for (var item=0; item<dataset.guests.length;item++){
+        console.log(item);
+        var text1 = paper.text(x,y,dataset.guests[item ]);
+        text1.attr({ "font-family": "arial", fill: "black", "font-size": 22 });
+        y+=15;
+        var pth = "M"+ (x-10).toString() + "," + y.toString() + " L" + (x+20).toString() + "," + (y).toString();
+    
+        paper.path(pth);
+        idx += 1;
+        
+        y+=40;
+    }
+    var idx =0;
+    var x=45;
+    var y=115;
+    for (var item2=0; item2<dataset.legend.length;item2++){
+
+        var color2 = color(dataset.guests[item2]);
+        console.log(color);
+   //     console.log(dataset.legend[item2]);
+        text1 = paper.text(x-30,y, dataset.legend[item2]).attr({'text-anchor': 'start'});
+        text1.attr({ "font-family": "arial",  "font-size": 14 ,"fill":color2});
+        y+=55;
+    }
+    
+    
+    ///viz2
+    var paper = new Raphael(document.getElementById('summary2'), 150,350);
+    
+    var dataset = {
+ // guests: [53245, 28479, 19697, 24037, 40245],
+    guests:[{{ qresults['outorder'] }},{{ qresults['totalrooms'] }}],
+ 
+    guests:[0,25],
+    legend:["Out of Order","Rooms Available"],
+    
+};
+
+    console.log(dataset.guests.count);
+    
+var width = 400,
+    height = 260,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.category20();
+
+var pie = d3.layout.pie()
+    .sort(null);
+
+var arc = d3.svg.arc()
+    .innerRadius(radius - 100)
+    .outerRadius(radius - 50);
+
+//var vis = d3.select("#viz").append("svg:svg").attr("width", w).attr("height", h);
+
+
+var svg = d3.select("#viz2").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var path = svg.selectAll("path")
+    .data(pie(dataset.guests))
+  .enter().append("path")
+    .attr("fill", function(d, i) { return color(i); })
+    .attr("d", arc);
+    
+    var idx =0;
+    var x=25;
+    var y=90;
+   console.log(dataset.guests.length);
+    for (var item=0; item<dataset.guests.length;item++){
+        console.log(item);
+        var text1 = paper.text(x,y,dataset.guests[item ]);
+        text1.attr({ "font-family": "arial", fill: "black", "font-size": 22 });
+        y+=15;
+        var pth = "M"+ (x-10).toString() + "," + y.toString() + " L" + (x+20).toString() + "," + (y).toString();
+    
+        paper.path(pth);
+        idx += 1;
+        
+        y+=40;
+    }
+    var idx =0;
+    var x=45;
+    var y=115;
+    for (var item2=0; item2<dataset.legend.length;item2++){
+
+        var color2 = color(dataset.guests[item2]);
+        console.log(color);
+   //     console.log(dataset.legend[item2]);
+        text1 = paper.text(x-30,y, dataset.legend[item2]).attr({'text-anchor': 'start'});
+        text1.attr({ "font-family": "arial",  "font-size": 14 ,"fill":color2});
+        y+=55;
+    }
+    
+    
+    
+    var dataset = {
+ // guests: [53245, 28479, 19697, 24037, 40245],
+     guests:[{{ qresults['stayover'] }},{{ qresults['dueout'] }},{{ qresults['arrivals'] }}],
+ 
+    
+    legend:["Today's Stay Overs","Rooms Due Out", "Arrivals"],
+    
+};
+var paper = new Raphael(document.getElementById('summary3'), 150,350);
+    
+
+    console.log(dataset.guests.count);
+    
+var width = 400,
+    height = 260,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.category20();
+
+var pie = d3.layout.pie()
+    .sort(null);
+
+var arc = d3.svg.arc()
+    .innerRadius(radius - 100)
+    .outerRadius(radius - 50);
+
+//var vis = d3.select("#viz3").append("svg:svg").attr("width", w).attr("height", h);
+
+
+var svg = d3.select("#viz3").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var path = svg.selectAll("path")
+    .data(pie(dataset.guests))
+  .enter().append("path")
+    .attr("fill", function(d, i) { return color(i); })
+    .attr("d", arc);
+    
+    var idx =0;
+    var x=25;
+    var y=90;
+   console.log(dataset.guests.length);
+    for (var item=0; item<dataset.guests.length;item++){
+        console.log(item);
+        var text1 = paper.text(x,y,dataset.guests[item ]);
+        text1.attr({ "font-family": "arial", fill: "black", "font-size": 22 });
+        y+=15;
+        var pth = "M"+ (x-10).toString() + "," + y.toString() + " L" + (x+20).toString() + "," + (y).toString();
+    
+        paper.path(pth);
+        idx += 1;
+        
+        y+=40;
+    }
+    var idx =0;
+    
+    var x=45;
+    var y=115;
+    for (var item2=0; item2<dataset.legend.length;item2++){
+
+        var color2 = color(dataset.guests[item2]);
+        console.log(color);
+   //     console.log(dataset.legend[item2]);
+        text1 = paper.text(x-30,y, dataset.legend[item2]).attr({'text-anchor': 'start'});
+        text1.attr({ "font-family": "arial",  "font-size": 14 ,"fill":color2});
+        y+=55;
+    }
+ </script>
+ 
+ {% endblock %}

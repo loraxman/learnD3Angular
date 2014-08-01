@@ -12,13 +12,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.min.js"></script>
+    	<script src="http://d3js.org/d3.v3.js"></script>
     
      <script src="javascript/angular.min.js">
         <script src="javascript/controllers.js">
     </script>
     
     <script  type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    
+ 
     <style type="text/css">
       .box {
         background-color: skyblue;
@@ -33,6 +34,7 @@
   <!-- Div under control of the angular controller -->
   <!--  show phones varibale -->
 	<h1>Demo of D3 Model Visualization</h1>
+	<canvas height></canvas>
 	  <div id="my-canvas"></div>
 	
 	   <button id="last">last</button>
@@ -91,12 +93,13 @@
       .attr("width", w)   // <-- Here
       .attr("height", h); // <-- and here!
 
-     
+ 
+
         var dataset  = "ss";
 
         // d3.json will make the ajax call for you gives you a callback.
         //  https://github.com/mbostock/d3/wiki/Requests
-        d3.json("http://localhost:5000/metadata_json", function (d) {
+        d3.json("http://10.16.52.81:5000/metadata_json", function (d) {
         dataset = d;
 		viewdata = dataset.slice((page-1)*10, page*10);
 

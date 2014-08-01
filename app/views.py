@@ -439,4 +439,7 @@ def getdetails(data):
 	print parsed['url']
 	return t
 
-
+@app.route("/getshs/<property>")
+def get_shs(property):
+	retrresults = models.get_shs(property)
+	return render_template("shs.html", qresults=retrresults)		
