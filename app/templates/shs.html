@@ -8,11 +8,22 @@
         
      </head>
     <body>
+       <div class="rowx" style="background-color:black;height:75px"> 
+        <div style="float:left">
+        	<p span style="font-size:30pt;text-align: left ;color:#F8F7FC ">DashBoard</p> 
+        </div>
+        <div>
+       		<p span style="font-size:30pt;text-align: center ;color:white ">Sabre</p>
+       	</div> 
+       </div>
     
-       <div id="panel"  class = "container" style="background-color:white;">
-       <div class="row" style="margin-bottom:100px;margin-top:100px;">
+      <div id="panel"  class = "container" style="background-color:white;">
+       <div class="row" style="margin-bottom:10px;margin-top:10px;">
+       		<p span style="font-size:22pt;text-align: center ; ">{{ qresults['today'] }} </p> </div>
+       </div>
+       <div class="row" style="margin-bottom:100px;margin-top:40px;width:80%;margin-left:80px;margin-right:20px">
        		<div class="col-lg-4">
-       			<div class="col-lg-4"><p span style="font-size:20pt;color:red; ">{{ qresults['totalrooms'] }}</p></div>
+       			<div class="col-lg-4"><p span style="font-size:24pt;color:red; ">{{ qresults['totalrooms'] }}</p></div>
        			<div class="col-lg-8"><p span style="font-size:12pt ">Total Rooms Available to Sell </p> </div>
        		</div>
        		<div class="col-lg-4">
@@ -25,7 +36,7 @@
        		</div>
        		
        	</div>
-       	<div class="row" style="background-color:#F2F6FA;">
+       	<div class="row" style="background-color:#F2F6FA;width:80%;margin-left:80px;margin-right:20px"">
        	  <div class="donuts col-lg-4" >
          
 		        <p span style="font-size:20pt ">Today's Activity<p>
@@ -51,6 +62,10 @@
 		        
 		     <div id="viz3" class="col-sm-1 column"></div>
 	  	  </div>  
+	  	</div>
+	  	
+	   <div class="row" style="background-color:black;margin-bottom:100px;width:80%;margin-left:80px;margin-right:20px">
+	   TEST
 	  	</div>
       </div>
     </body>

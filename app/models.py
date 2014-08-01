@@ -8,6 +8,7 @@ from couchdb.mapping import (Document, IntegerField,ListField,FloatField, TextFi
 import couchdb
 import custmodel
 import pyodbc
+from datetime import datetime
 
 class Model(Document):
     
@@ -262,6 +263,9 @@ def get_shs(property):
     qresults['ratesum'] =  cur.fetchone()[0]
      
     qresults['occupypct'] = "{:3.2f}%".format( 100* ( qresults['totalrooms']/qresults['arrivals']))
+    
+    qresults['today'] = datetime.now().strftime("%A, %B, %d, %Y")
+    
     return qresults
         
     
